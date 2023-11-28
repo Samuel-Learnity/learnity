@@ -1,0 +1,24 @@
+const tintColorLight = '#EA727E';
+const tintColorDark = '#6F6FA0';
+
+export default {
+    light: {
+        primary: '#eee',
+        secondary: '#222',
+        tint: tintColorLight,
+        tabIconDefault: '#ccc',
+        tabIconSelected: tintColorLight,
+    },
+    dark: {
+        primary: '#222',
+        secondary: '#EEE',
+        tint: tintColorDark,
+        tabIconDefault: '#ccc',
+        tabIconSelected: tintColorDark,
+    },
+    primary: '#EA727E',
+    color_gradient: ['#6F6FA0', '#C86B84', '#EA727E', '#F6898F', '#F7B980', '#F3DC86'],
+    //color_gradient: ['#150E5C', '#341358', '#5E1D53', '#9C2A4B', '#D63940', '#F4633C'],
+
+    transparent: 'rgba(0,0,0,0)',
+};
