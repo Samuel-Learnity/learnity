@@ -1,7 +1,7 @@
 import {StyleSheet, TouchableOpacity} from 'react-native';
 import {Image} from 'expo-image';
 import {Text, View as ThemedView} from '../../components/Themed';
-import {useNavigation} from "expo-router";
+import {router, useNavigation} from "expo-router";
 import {TextInput} from "react-native-paper";
 import {useState} from "react";
 import {Spacer} from "../../components/common/Spacer";
@@ -26,7 +26,6 @@ export default function LoginScreen() {
     }
 
     const onLogin = () => {
-        // @ts-ignore
         router.push('/(tabs)/')
     }
 

@@ -1,13 +1,15 @@
 import {BottomTabBarProps} from "@react-navigation/bottom-tabs";
 import {StyleSheet, TouchableOpacity, useColorScheme} from "react-native";
-import {Text, View} from "./Themed";
+import {View} from "./Themed";
 import Colors from "../constants/Colors";
-import {faUser} from "@fortawesome/free-regular-svg-icons/faUser";
-import {Spacer} from "./common/Spacer";
-import {IconDefinition} from "@fortawesome/free-brands-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-native-fontawesome";
-import {LinearGradient} from "expo-linear-gradient";
-
+import IconHome from "../assets/images/icons/home.svg"
+import IconHomeActive from "../assets/images/icons/home_active.svg"
+import IconAccount from "../assets/images/icons/account_circle.svg"
+import IconAccountActive from "../assets/images/icons/account_circle_active.svg"
+import IconCommunity from "../assets/images/icons/supervisor_account.svg"
+import IconCommunityActive from "../assets/images/icons/supervisor_account_active.svg"
+import IconMedia from "../assets/images/icons/video_library.svg"
+import IconMediaActive from "../assets/images/icons/video_library_active.svg"
 
 export const TabBar = (props: BottomTabBarProps) => {
     const colorScheme = useColorScheme();
@@ -15,34 +17,20 @@ export const TabBar = (props: BottomTabBarProps) => {
     const styles = StyleSheet.create({
         tabBarStyle: {
             flexDirection: 'row',
-            margin: 4,
-            padding: 8,
-            backgroundColor: colorScheme == 'light' ? "#fff" : "#000",
-            borderRadius: 12,
-        },
-        linearGradient: {
-            marginBottom: props.insets.bottom,
-            marginRight: 16,
-            marginLeft: 16,
-            borderRadius: 16,
-            alignItems: "center"
+            backgroundColor: colorScheme == 'light' ? "#FFFBFF" : "#000",
+            paddingBottom: props.insets.bottom,
+            paddingVertical: 16,
+            paddingHorizontal: 16
         },
     })
 
     return (
         <View /* Prevent default theme background on dark mode */>
-            <LinearGradient
-                colors={Colors.color_gradient}
-                start={{x: 0, y: 0}}
-                end={{x: 1, y: 0}}
-                style={styles.linearGradient}
-            >
-                <View style={styles.tabBarStyle}>
-                    {props.state.routes.map((route, index) => {
-                        return <TabBarItem tabBarProps={props} route={route} index={index} key={index}/>
-                    })}
-                </View>
-            </LinearGradient>
+            <View style={styles.tabBarStyle}>
+                {props.state.routes.map((route, index) => {
+                    return <TabBarItem tabBarProps={props} route={route} index={index} key={index}/>
+                })}
+            </View>
         </View>
     )
 }
@@ -53,17 +41,17 @@ interface ITabBarItem {
     index: number
 }
 
+enum TabBarIndex {
+    home,
+    media,
+    communities,
+    profile
+}
+
 export const TabBarItem = ({tabBarProps, route, index}: ITabBarItem) => {
     const {navigation, descriptors, state} = tabBarProps
     const {options} = descriptors[route.key]
     const colorScheme = useColorScheme();
-
-    const label =
-        options.tabBarLabel !== undefined
-            ? options.tabBarLabel
-            : options.title !== undefined
-                ? options.title
-                : route.name;
 
     const isFocused = state.index === index;
 
@@ -89,6 +77,7 @@ export const TabBarItem = ({tabBarProps, route, index}: ITabBarItem) => {
     const styles = StyleSheet.create({
         container: {
             flex: 1,
+            marginBottom: 8,
             flexDirection: 'column',
             justifyContent: 'center',
             alignItems: 'center',
@@ -97,6 +86,30 @@ export const TabBarItem = ({tabBarProps, route, index}: ITabBarItem) => {
 
     let iconColor = colorScheme === 'light' ? Colors.light.tabIconDefault : Colors.dark.tabIconDefault
     iconColor = isFocused ? Colors.primary : iconColor
+
+    const indexIcon = () => {
+        switch (index) {
+            case TabBarIndex.home: {
+                return isFocused ? <IconHomeActive width={20} height={20} fill={iconColor}/>
+                    : <IconHome width={20} height={20} fill={iconColor}/>
+            }
+            case TabBarIndex.media: {
+                return isFocused ? <IconMediaActive width={20} height={20} fill={iconColor}/>
+                    : <IconMedia width={20} height={20} fill={iconColor}/>
+            }
+            case TabBarIndex.communities: {
+                return isFocused ? <IconCommunityActive width={20} height={20} fill={iconColor}/>
+                    :  <IconCommunity width={20} height={20} fill={iconColor}/>
+            }
+            case TabBarIndex.profile: {
+                return isFocused ? <IconAccountActive width={20} height={20} fill={iconColor}/>
+                    : <IconAccount width={20} height={20} fill={iconColor}/>
+            }
+            default: {
+                return <IconHomeActive width={20} height={20} fill={iconColor}/>
+            }
+        }
+    }
 
     return (
         <TouchableOpacity
@@ -109,20 +122,19 @@ export const TabBarItem = ({tabBarProps, route, index}: ITabBarItem) => {
             onLongPress={onLongPress}
             style={styles.container}
         >
-            <TabBarIcon icon={faUser} color={iconColor}/>
-            <Spacer size={8}/>
-            <Text style={{color: iconColor}}>
-                {label}
-            </Text>
+            {
+                indexIcon()
+            }
         </TouchableOpacity>
     );
 
 }
 
-function TabBarIcon(props: {
-    icon: IconDefinition,
-    color: string,
 
+function TabBarIcon(props: {
+    index: number,
+    color: string,
 }) {
-    return <FontAwesomeIcon size={28} style={{marginBottom: -3}} icon={props.icon} color={props.color}/>;
+
+
 }

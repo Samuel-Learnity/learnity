@@ -10,7 +10,7 @@ type BtnProps = {
     onPress: () => void,
     title: string,
     buttonSize?: ButtonSizeType,
-    mode?: 'text' | 'outlined' | 'contained' | 'elevated' | 'contained-tonal',
+    mode?: 'text' | 'outlined' | 'contained',//  | 'elevated' | 'contained-tonal',
     isSticky?: boolean
     isLoading?: boolean
     width?: number // Percent %
@@ -25,17 +25,22 @@ export function Button(props: ButtonProps) {
 
     const [isSelected, setIsSelected] = useState(false)
 
+    // Mode du bouton. Text par défaut
     let mode = props.mode ?? 'text'
+
     const haveBackground = mode !== "outlined" && mode !== "text"
 
+    // Taille du bouton. S par défaut
     let buttonSize = props.buttonSize ?? ButtonSize_S
 
+    // Primary color of the theme
     const primaryColor = useThemeColor({light: Colors.light.secondary, dark: Colors.dark.secondary}, 'secondary')
+    // Secondary color of the theme
     const secondaryColor = useThemeColor({light: Colors.light.primary, dark: Colors.dark.primary}, 'primary')
 
     const backgroundColor = haveBackground ? primaryColor
-        : undefined;
-    const selectedBackgroundColor = haveBackground ? undefined
+        : Colors.transparent;
+    const selectedBackgroundColor = haveBackground ? Colors.transparent
         : primaryColor;
 
     const textColor = haveBackground ? secondaryColor
@@ -57,13 +62,10 @@ export function Button(props: ButtonProps) {
             paddingHorizontal: 16,
         },
         notSelected: {
-            backgroundColor: backgroundColor ?? Colors.transparent,
+            backgroundColor: backgroundColor,
         },
         selected: {
-            backgroundColor: selectedBackgroundColor ?? Colors.transparent,
-            borderColor: primaryColor,
-            borderStyle: "solid",
-            borderWidth: 1
+            backgroundColor: selectedBackgroundColor,
         },
         stickyBottom: {
             width: "100%",
@@ -79,14 +81,16 @@ export function Button(props: ButtonProps) {
 
     })
 
+    // Fusion des styles en fonction du theme, du mode et de l'action
     let buttonStyle = {...styles.button, ...buttonSize.button}
-
     if (mode === 'outlined') {
         buttonStyle = {...buttonStyle, ...styles.outline}
     }
-
     let notSelectedStyle = {...buttonStyle, ...styles.notSelected}
     let selectedStyle = {...buttonStyle, ...styles.selected}
+    if (mode === 'contained') {
+        selectedStyle = {...selectedStyle, ...styles.outline}
+    }
 
     const _onPressStart = () => {
         setIsSelected(true)
@@ -94,8 +98,9 @@ export function Button(props: ButtonProps) {
     const _onPressEnd = () => {
         setIsSelected(false)
     }
-    const fadeAnim = useRef(new Animated.Value(0)).current; // Initial value for opacity: 0
 
+    // Ne fonctionne pas: Utiliser la lib Reanimated pour les animations
+    const fadeAnim = useRef(new Animated.Value(0)).current; // Initial value for opacity: 0
     useEffect(() => {
         if (isSelected) {
             console.log("isSelected", isSelected)
@@ -121,6 +126,7 @@ export function Button(props: ButtonProps) {
             onPressIn={_onPressStart}
             onPressOut={_onPressEnd}
         >
+            {/* Utiliser Reanimated */}
             <Animated.View style={isSelected ? selectedStyle : notSelectedStyle}>
                 <RobotoText style={{...buttonSize.text, color: isSelected ? selectedTextColor : textColor}}>
                     {props.title}

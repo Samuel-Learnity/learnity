@@ -6,7 +6,7 @@ export default function TabOneScreen() {
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Tab One</Text>
-            <Separator/>
+            <Separator marginBottom={0} marginTop={0} widthPercent={80}/>
         </View>
     );
 }

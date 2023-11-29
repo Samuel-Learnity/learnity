@@ -20,7 +20,6 @@ export const ButtonSize_S: ButtonSizeType = StyleSheet.create({
     },
 })
 
-
 export const ButtonSize_M: ButtonSizeType  = StyleSheet.create({
     button: {
         height: 48,
