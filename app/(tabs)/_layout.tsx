@@ -1,5 +1,7 @@
 import {Tabs} from 'expo-router';
 import {TabBar} from "../../components/TabBar";
+import {Platform} from "react-native";
+import {BlurView} from "expo-blur";
 
 /**
  * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
@@ -9,32 +11,44 @@ import {TabBar} from "../../components/TabBar";
 export default function TabLayout() {
     return (
         <Tabs
-            tabBar={props => <TabBar {...props}/>}
+            initialRouteName="(home)"
+            tabBar={props =>
+                Platform.OS === "ios" ? (
+                    <BlurView
+                        style={{position: "absolute", bottom: 0, left: 0, right: 0}}
+                        intensity={95}
+                    >
+                        <TabBar {...props} />
+                    </BlurView>
+                ) : (
+                    <TabBar {...props} />
+                )}
             screenOptions={{
                 headerShown: false
             }}>
             <Tabs.Screen
-                name="index"
+                name="(home)"
                 options={{
-                    title: 'Tab One',
+                    href: '/(home)/',
+                    title: 'Home',
                 }}
             />
             <Tabs.Screen
-                name="two"
+                name="(media)"
                 options={{
-                    title: 'Tab Two',
+                    href: '/(media)/',
                 }}
             />
             <Tabs.Screen
-                name="three"
+                name="(communities)"
                 options={{
-                    title: 'Tab Three',
+                    href: '/(communities)/',
                 }}
             />
             <Tabs.Screen
-                name="four"
+                name="(profile)"
                 options={{
-                    title: 'Tab Four',
+                    href: '/(profile)/',
                 }}
             />
         </Tabs>

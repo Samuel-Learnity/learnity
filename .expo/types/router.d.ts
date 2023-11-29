@@ -7,7 +7,7 @@ declare module "expo-router" {
   export * from 'expo-router/build';
 
   // prettier-ignore
-  type StaticRoutes = `/` | `/(auth)/_layout` | `/_layout` | `/(auth)/` | `/(auth)` | `/(auth)/login` | `/login` | `/(auth)/register` | `/register` | `/(tabs)/_layout` | `/(tabs)/four` | `/four` | `/(tabs)/` | `/(tabs)` | `/(tabs)/three` | `/three` | `/(tabs)/two` | `/two` | `/+html` | `/modal`;
+  type StaticRoutes = `/` | `/(auth)/_layout` | `/_layout` | `/(auth)/` | `/(auth)` | `/(auth)/login` | `/login` | `/(auth)/password_reset` | `/password_reset` | `/(auth)/register` | `/register` | `/(tabs)/(communities)/_layout` | `/(tabs)/(communities)/communities` | `/communities` | `/(tabs)/(home)/_layout` | `/(tabs)/(media)/_layout` | `/(tabs)/(media)/media` | `/media` | `/(tabs)/(profile)/_layout` | `/(tabs)/(profile)/profile` | `/profile` | `/(tabs)/_layout` | `/+html` | `/modal` | `/(tabs)/(home)/home` | `/home` | `/(tabs)/(profile)/settings` | `/settings`;
   // prettier-ignore
   type DynamicRoutes<T extends string> = `/${CatchAllRoutePart<T>}`;
   // prettier-ignore

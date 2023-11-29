@@ -4,8 +4,7 @@ import {useNavigation} from "expo-router";
 import {SafeAreaThemed} from "../../components/common/SafeAreaThemed";
 import {logoIcon} from "../../assets/Images";
 import {Button} from "../../components/design system/SystemButton";
-import {ButtonSize_L, ButtonSize_M, ButtonSize_S} from "../../components/design system/ButtonStyles";
-import {Button as PaperButton} from "react-native-paper";
+import {ButtonSize_M} from "../../components/design system/ButtonStyles";
 
 export default function LoginScreen() {
     const navigation = useNavigation()
@@ -35,26 +34,9 @@ export default function LoginScreen() {
                 width={80}
                 marginHorizontal={80}
                 marginVertical={8}
-                buttonSize={ButtonSize_S}
-            />
-            <Button
-                title={"Se connecter"}
-                mode="outlined"
-                onPress={() => goToLogin()}
-                width={80}
-                marginHorizontal={80}
-                marginVertical={8}
                 buttonSize={ButtonSize_M}
             />
-            <Button
-                title={"Se connecter"}
-                mode="outlined"
-                onPress={() => goToLogin()}
-                width={80}
-                marginHorizontal={80}
-                marginVertical={8}
-                buttonSize={ButtonSize_L}
-            />
+
             <Button
                 title={"S'enregistrer"}
                 mode="contained"

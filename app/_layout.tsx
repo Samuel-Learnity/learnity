@@ -5,6 +5,7 @@ import {SplashScreen, Stack} from 'expo-router';
 import {useEffect} from 'react';
 import {useColorScheme} from 'react-native';
 import {PaperProvider} from "react-native-paper";
+import {loadAppFont} from "../assets/loadAppFont";
 
 export {
     // Catch any errors thrown by the Layout component.
@@ -15,15 +16,7 @@ export {
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-    const [loaded, error] = useFonts({
-        SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-        RobotoBold: require('../assets/fonts/Roboto-Bold.ttf'),
-        RobotoLight: require('../assets/fonts/Roboto-Light.ttf'),
-        RobotoThin: require('../assets/fonts/Roboto-Thin.ttf'),
-        RobotoMedium: require('../assets/fonts/Roboto-Medium.ttf'),
-        RobotoRegular: require('../assets/fonts/Roboto-Regular.ttf'),
-        ...FontAwesome.font,
-    });
+    const [loaded, error] = loadAppFont()
 
     // Expo Router uses Error Boundaries to catch errors in the navigation tree.
     useEffect(() => {

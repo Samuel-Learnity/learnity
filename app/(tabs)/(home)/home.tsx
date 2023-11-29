@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
-import {Text, View} from '../../components/Themed';
-import {Separator} from "../../components/common/Separator";
+import {Text, View} from '../../../components/Themed';
+import {Separator} from "../../../components/common/Separator";
 
 export default function TabOneScreen() {
     return (

@@ -24,9 +24,14 @@ export default function LoginScreen() {
         // @ts-ignore
         navigation.navigate("register")
     }
+    const goToResetPassword = () => {
+        // @ts-ignore
+        navigation.navigate("password_reset")
+    }
 
+    // TODO: auth check and redirect
     const onLogin = () => {
-        router.push('/(tabs)/')
+        router.push('/(tabs)/(home)/home')
     }
 
     return (
@@ -34,6 +39,7 @@ export default function LoginScreen() {
             {/* TODO: ScrollView for little screen and keyboard padding*/}
             <ThemedView style={styles.header}>
                 <TouchableOpacity onPress={onGoWelcomeScreen} style={styles.backButton}>
+                    {/*TODO: mettre un vrai icon*/}
                     <Text style={{fontSize: 38}}>{"<"}</Text>
                 </TouchableOpacity>
             </ThemedView>
@@ -44,7 +50,6 @@ export default function LoginScreen() {
                 contentFit={"contain"}
             />
             <Text style={styles.title}>Connexion</Text>
-            <Separator marginTop={16} marginBottom={32} widthPercent={80}/>
             <ThemedView style={styles.form}>
                 <TextInput
                     label="Email"
@@ -63,6 +68,9 @@ export default function LoginScreen() {
                             value={password}
                             onChangeText={e => setPassword(e)}
                         />
+                        <ThemedView style={{width: "100%", alignContent: 'flex-start', marginLeft: "20%", marginTop: 16}}>
+                            <Text style={styles.textBold} onPress={goToResetPassword}>Mot de passe oublié ?</Text>
+                        </ThemedView>
                     </>
                 }
             </ThemedView>
@@ -110,8 +118,8 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     title: {
-        fontSize: 24,
-        fontWeight: 'bold',
+        fontSize: 36,
+        fontFamily: 'RobotoCondensedRegular',
         alignSelf: "flex-start",
         marginLeft: "10%",
         marginTop: 8,
@@ -126,6 +134,10 @@ const styles = StyleSheet.create({
     linkText: {
         fontSize: 16,
         textDecorationLine: "underline",
+    },
+    textBold: {
+        fontSize: 16,
+        fontFamily: "RobotoBold",
     },
     text: {
         fontSize: 16,
