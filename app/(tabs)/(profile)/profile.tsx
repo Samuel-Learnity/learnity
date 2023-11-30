@@ -3,22 +3,16 @@ import {useThemeColor, View, Text} from '../../../components/Themed';
 import {useNavigation} from "expo-router";
 import {SafeAreaThemed} from "../../../components/common/SafeAreaThemed";
 import {
-    AvatarHeaderScrollView,
-    DetailsHeaderScrollView,
     StickyHeaderScrollView,
     useStickyHeaderScrollProps
 } from "react-native-sticky-parallax-header";
 import SettingIcon from '../../../assets/images/settings.svg'
-import IconBack from '../../../assets/images/arrow_back_ios_new.svg'
-import {IconThemed} from "../../../components/IconThemed";
 import Colors from "../../../constants/Colors";
 import {Header, HeaderButton} from "../../../components/Header";
-import Animated, {Extrapolate, interpolate, useAnimatedStyle} from "react-native-reanimated";
 import {Spacer} from "../../../components/common/Spacer";
-import {Separator} from "../../../components/common/Separator";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
-import {FC} from "react";
 import {TagView} from "../../../components/design system/TagView";
+import {useEffect, useState} from "react";
 
 const PARALLAX_HEIGHT = 330;
 const HEADER_BAR_HEIGHT = 92;
@@ -44,6 +38,8 @@ export default function ProfileScreen() {
         snapToEdge: true,
     });
 
+    const [headerShown, setHeaderShown] = useState(true);
+
     const goBack = () => {
         if (navigation.canGoBack()) {
             navigation.goBack()
@@ -56,15 +52,25 @@ export default function ProfileScreen() {
         navigation.navigate('settings')
     }
 
+    const handleScroll = (e: any) => {
+        const scrolling = e.contentOffset.y;
+
+        if (scrolling > 100) {
+            setHeaderShown(false);
+            console.log("SCROLL > 100", scrolling)
+        } else {
+            setHeaderShown(true);
+            console.log("SCROLL <= 100", scrolling)
+        }
+    }
     const isDarkTheme = useColorScheme() === 'dark';
-    const insets = useSafeAreaInsets()
     return (
         <View style={{height: '100%'}}>
             <View style={[styles.headerBarContainer, {width: '100%'}]}>
                 <Header
-                    headerRight={HeaderButton({action: goToSettings, icon: SettingIcon, width: 26, height: 26})}
+                    headerRight={{action: goToSettings, icon: SettingIcon, width: 32, height: 32}}
                     haveBackground={false}
-                    headerShown={true}
+                    headerShown={headerShown}
                 />
             </View>
             <StickyHeaderScrollView
@@ -117,7 +123,7 @@ export default function ProfileScreen() {
                 }
             >
                 <View style={{height: '100%'}}>
-                    <Spacer size={10000}/>
+                    <Spacer size={1000}/>
                 </View>
             </StickyHeaderScrollView>
         </View>

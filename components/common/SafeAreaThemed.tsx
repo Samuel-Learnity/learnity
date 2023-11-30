@@ -1,8 +1,12 @@
 import {SafeAreaView, StyleSheet} from "react-native";
 import {View} from "../Themed";
 import {ReactElement} from "react";
+import {useSafeAreaInsets} from "react-native-safe-area-context";
+import {Spacer} from "./Spacer";
 
 export function SafeAreaThemed(props: { children: ReactElement | ReactElement[] }) {
+    const insets = useSafeAreaInsets()
+
     return (
         <View style={styles.view}>
             <SafeAreaView style={styles.safeArea}>

@@ -6,10 +6,11 @@ import {useState} from "react";
 import {Spacer} from "../../components/common/Spacer";
 import {SafeAreaThemed} from "../../components/common/SafeAreaThemed";
 import {Separator} from "../../components/common/Separator";
-import {logoIcon} from "../../assets/Images";
+import Images, {logoIcon} from "../../assets/Images";
 import {Button} from "../../components/design system/SystemButton";
 import {ButtonSize_L} from "../../components/design system/ButtonStyles";
 import {useNavigation, useRouter} from "expo-router";
+import {Header} from "../../components/Header";
 
 export default function LoginScreen() {
     const navigation = useNavigation()
@@ -17,6 +18,7 @@ export default function LoginScreen() {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [passwordVerif, setPasswordVerif] = useState("")
+    const [headerShown, setHeaderShown] = useState(true);
 
     const onGoWelcomeScreen = () => {
         // @ts-ignore
@@ -36,11 +38,11 @@ export default function LoginScreen() {
     return (
         <SafeAreaThemed>
             {/* TODO: ScrollView for little screen and keyboard padding*/}
-            <View style={styles.header}>
-                <TouchableOpacity onPress={onGoWelcomeScreen} style={styles.backButton}>
-                    <Text style={{fontSize: 38}}>{"<"}</Text>
-                </TouchableOpacity>
-            </View>
+            <Header
+                headerLeft={{action: onGoWelcomeScreen, icon: Images.BackIcon, width: 32, height: 32}}
+                haveBackground={false}
+                headerShown={headerShown}
+            />
             <Image
                 source={logoIcon}
                 alt={"Logo"}

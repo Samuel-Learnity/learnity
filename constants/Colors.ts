@@ -25,7 +25,6 @@ export default {
         tabIconSelected: tintColorDark,
     },
     error: '#BA1A1A',
-    primary: '#EA727E',
     color_gradient: ['#6F6FA0', '#C86B84', '#EA727E', '#F6898F', '#F7B980', '#F3DC86'],
     //color_gradient: ['#150E5C', '#341358', '#5E1D53', '#9C2A4B', '#D63940', '#F4633C'],
 

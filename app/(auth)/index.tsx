@@ -8,6 +8,7 @@ import {ButtonSize_M} from "../../components/design system/ButtonStyles";
 
 export default function LoginScreen() {
     const navigation = useNavigation()
+
     const goToRegister = () => {
         // @ts-ignore
         navigation.navigate("register")

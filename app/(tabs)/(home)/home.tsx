@@ -1,11 +1,21 @@
-import {StyleSheet} from 'react-native';
+import {Pressable, StyleSheet} from 'react-native';
 import {Text, View} from '../../../components/Themed';
 import {Separator} from "../../../components/common/Separator";
+import {Link, useNavigation, router} from "expo-router";
 
-export default function TabOneScreen() {
+export default function HomeScreen() {
+    const navigation = useNavigation()
+
+    const openModal = () => {
+        // @ts-ignore
+        navigation.navigate("detail")
+    }
+
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Tab One</Text>
+            <Pressable onPress={openModal}>
+                <Text style={styles.title}>Go to detail</Text>
+            </Pressable>
             <Separator marginBottom={0} marginTop={0} widthPercent={80}/>
         </View>
     );

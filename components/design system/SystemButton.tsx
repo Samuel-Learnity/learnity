@@ -47,8 +47,7 @@ export function Button(props: ButtonProps) {
     let selectedBackgroundColor: string
 
     let textColor: string
-    let selectedTextColor: string = haveBackground ? primaryColor
-        : secondaryColor;
+    let selectedTextColor: string
 
     switch (mode) {
         case "contained": {
@@ -102,7 +101,7 @@ export function Button(props: ButtonProps) {
         stickyBottom: {
             width: "100%",
             position: "absolute",
-            bottom: insets.bottom,
+            bottom: insets.bottom + 16,
             alignItems: "center"
         },
         outline: {
@@ -136,14 +135,12 @@ export function Button(props: ButtonProps) {
     const fadeAnim = useRef(new Animated.Value(0)).current; // Initial value for opacity: 0
     useEffect(() => {
         if (isSelected) {
-            console.log("isSelected", isSelected)
             Animated.timing(fadeAnim, {
                 toValue: 1,
                 duration: 10000,
                 useNativeDriver: true,
             }).start();
         } else {
-            console.log("End Selected", isSelected)
             Animated.timing(fadeAnim, {
                 toValue: 1,
                 duration: 10000,

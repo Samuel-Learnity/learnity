@@ -1,7 +1,6 @@
 import {BottomTabBarProps} from "@react-navigation/bottom-tabs";
-import {StyleSheet, TouchableOpacity, useColorScheme} from "react-native";
+import {Platform, StyleSheet, TouchableOpacity, useColorScheme} from "react-native";
 import {View} from "./Themed";
-import Colors from "../constants/Colors";
 import IconHome from "../assets/images/icons/home.svg"
 import IconHomeActive from "../assets/images/icons/home_active.svg"
 import IconAccount from "../assets/images/icons/account_circle.svg"
@@ -19,7 +18,7 @@ export const TabBar = (props: BottomTabBarProps) => {
         tabBarStyle: {
             flexDirection: 'row',
             backgroundColor: colorScheme == 'light' ? "#FFFBFF" : "#000",
-            paddingBottom: props.insets.bottom,
+            paddingBottom: props.insets.bottom + 8,
             paddingVertical: 16,
             paddingHorizontal: 16
         },
@@ -29,7 +28,10 @@ export const TabBar = (props: BottomTabBarProps) => {
         <View /* Prevent default theme background on dark mode */>
             <View style={styles.tabBarStyle}>
                 {props.state.routes.map((route, index) => {
-                    return <TabBarItem tabBarProps={props} route={route} index={index} key={index}/>
+                    return <TabBarItem tabBarProps={props}
+                                       route={route}
+                                       index={index}
+                                       key={index}/>
                 })}
             </View>
         </View>
@@ -85,9 +87,6 @@ export const TabBarItem = ({tabBarProps, route, index}: ITabBarItem) => {
         }
     })
 
-    let iconColor = colorScheme === 'light' ? Colors.light.tabIconDefault : Colors.dark.tabIconDefault
-    iconColor = isFocused ? Colors.primary : iconColor
-
     const indexIcon = () => {
         switch (index) {
             case TabBarIndex.home: {
@@ -95,16 +94,16 @@ export const TabBarItem = ({tabBarProps, route, index}: ITabBarItem) => {
                     : <IconThemed source={IconHome} width={22} height={22}/>
             }
             case TabBarIndex.media: {
-                return isFocused ? <IconMediaActive width={22} height={22} fill={iconColor}/>
-                : <IconThemed source={IconMedia} width={22} height={22}/>
+                return isFocused ? <IconMediaActive width={22} height={22}/>
+                    : <IconThemed source={IconMedia} width={22} height={22}/>
 
             }
             case TabBarIndex.communities: {
-                return isFocused ? <IconCommunityActive width={22} height={22} fill={iconColor}/>
+                return isFocused ? <IconCommunityActive width={22} height={22}/>
                     : <IconThemed source={IconCommunity} width={22} height={22}/>
             }
             case TabBarIndex.profile: {
-                return isFocused ? <IconAccountActive width={22} height={22} fill={iconColor}/>
+                return isFocused ? <IconAccountActive width={22} height={22}/>
                     : <IconThemed source={IconAccount} width={22} height={22}/>
             }
             default: {
@@ -129,14 +128,4 @@ export const TabBarItem = ({tabBarProps, route, index}: ITabBarItem) => {
             }
         </TouchableOpacity>
     );
-
-}
-
-
-function TabBarIcon(props: {
-    index: number,
-    color: string,
-}) {
-
-
 }

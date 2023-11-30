@@ -1,7 +1,7 @@
 import {
     Animated,
     NativeScrollEvent,
-    NativeSyntheticEvent,
+    NativeSyntheticEvent, Platform,
     StyleSheet,
     TouchableOpacity,
     useColorScheme
@@ -9,6 +9,7 @@ import {
 import {Text, useThemeColor, View} from '../../../components/Themed';
 import {Header, HeaderButton} from "../../../components/Header";
 import IconBack from "../../../assets/images/arrow_back_ios_new.svg";
+import IconSettings from "../../../assets/images/settings.svg";
 import {useNavigation} from "expo-router";
 import {SafeAreaThemed} from "../../../components/common/SafeAreaThemed";
 import {ScrollView} from "react-native";
@@ -19,6 +20,8 @@ import {useState} from "react";
 import {Button} from "../../../components/design system/SystemButton";
 import {Spacer} from "../../../components/common/Spacer";
 import {Separator} from "../../../components/common/Separator";
+import {inspect} from "util";
+import {useSafeAreaInsets} from "react-native-safe-area-context";
 
 export default function SettingsScreen() {
     const navigation = useNavigation()
@@ -31,6 +34,10 @@ export default function SettingsScreen() {
     const [oldPassword, setOldPassword] = useState("")
     const [newPassword, setNewPassword] = useState("")
     const [headerShown, setHeaderShown] = useState(true);
+
+    const insets = useSafeAreaInsets()
+
+    const edgeTop = Platform.OS === "ios" ? insets.top + 24: insets.top + 72;
 
     const styles = StyleSheet.create({
         container: {
@@ -75,35 +82,36 @@ export default function SettingsScreen() {
     }
 
     const onUpdateEmail = () => {
+        //
 
     }
 
     const onUpdatePassword = () => {
 
+        //
     }
     const handleScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
         const scrolling = e.nativeEvent.contentOffset.y;
 
         if (scrolling > 100) {
             setHeaderShown(false);
-            console.log(scrolling)
         } else {
             setHeaderShown(true);
-            console.log(scrolling)
         }
     }
 
     const onDisconnect = () => {
+        //
 
     }
     const onDeleteAccount = () => {
-
+        //
     }
 
     return (
         <SafeAreaThemed>
             <Header
-                headerLeft={HeaderButton({action: goBack, icon: IconBack, width: 26, height: 26})}
+                headerLeft={{action: goBack, icon: IconBack, width: 30, height: 30}}
                 headerTitle={'Settings'}
                 haveBackground={false}
                 headerShown={headerShown}
@@ -115,7 +123,7 @@ export default function SettingsScreen() {
                 scrollEventThrottle={16}
                 onScroll={handleScroll}
             >
-                <Spacer size={72}/>
+                <Spacer size={edgeTop}/>
                 <View style={styles.container}>
                     <View style={styles.card}>
                         <Text style={styles.card_title}>Update email</Text>

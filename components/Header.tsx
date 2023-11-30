@@ -3,16 +3,16 @@ import {useSafeAreaInsets} from "react-native-safe-area-context";
 import {Text} from "./Themed"
 import {FC, ReactNode, useEffect, useRef} from "react";
 import {Animated, StyleSheet, TouchableOpacity} from "react-native";
-import IconBack from "../assets/images/arrow_back_ios_new.svg";
 import Colors from "../constants/Colors";
 import {IconThemed} from "./IconThemed";
 import {Spacer} from "./common/Spacer";
 import {SvgProps} from "react-native-svg";
+import {Separator} from "./common/Separator";
 
 export interface HeaderProps {
-    headerLeft?: ReactNode
+    headerLeft?: HeaderButtonProps
     headerTitle?: string
-    headerRight?: ReactNode
+    headerRight?: HeaderButtonProps
     haveBackground?: boolean
     headerShown?: boolean
 }
@@ -75,7 +75,8 @@ export const Header: FC<HeaderProps> = (
             flexGrow: 0,
             flexShrink: 1,
             flexBasis: 40,
-            minWidth: 40
+            minWidth: 40,
+
         }
     })
 
@@ -91,7 +92,7 @@ export const Header: FC<HeaderProps> = (
         <Animated.View style={styles.header}>
             {headerLeft ?
                 <View style={styles.left}>
-                    {headerLeft}
+                    <HeaderButton {...headerLeft}/>
                 </View>
                 : <Spacer size={40}/>
             }
@@ -105,7 +106,7 @@ export const Header: FC<HeaderProps> = (
             }
             {headerRight ?
                 <View style={styles.right}>
-                    {headerRight}
+                    <HeaderButton {...headerRight}/>
                 </View>
                 : <View style={styles.right}><Spacer size={40}/></View>
             }

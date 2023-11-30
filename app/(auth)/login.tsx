@@ -6,15 +6,16 @@ import {TextInput} from "react-native-paper";
 import {useState} from "react";
 import {Spacer} from "../../components/common/Spacer";
 import {SafeAreaThemed} from "../../components/common/SafeAreaThemed";
-import {Separator} from "../../components/common/Separator";
-import {logoIcon} from "../../assets/Images";
+import Images, {logoIcon} from "../../assets/Images";
 import {Button} from "../../components/design system/SystemButton";
 import {ButtonSize_L} from "../../components/design system/ButtonStyles";
+import {Header} from "../../components/Header";
 
 export default function LoginScreen() {
     const navigation = useNavigation()
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const [headerShown, setHeaderShown] = useState(true);
 
     const onGoWelcomeScreen = () => {
         navigation.goBack()
@@ -37,12 +38,11 @@ export default function LoginScreen() {
     return (
         <SafeAreaThemed>
             {/* TODO: ScrollView for little screen and keyboard padding*/}
-            <ThemedView style={styles.header}>
-                <TouchableOpacity onPress={onGoWelcomeScreen} style={styles.backButton}>
-                    {/*TODO: mettre un vrai icon*/}
-                    <Text style={{fontSize: 38}}>{"<"}</Text>
-                </TouchableOpacity>
-            </ThemedView>
+            <Header
+                headerLeft={{action: onGoWelcomeScreen, icon: Images.BackIcon, width: 32, height: 32}}
+                haveBackground={false}
+                headerShown={headerShown}
+            />
             <Image
                 source={logoIcon}
                 alt={"Logo"}
