@@ -1,13 +1,28 @@
-import {StyleSheet} from 'react-native';
+import {StyleSheet, TouchableOpacity} from 'react-native';
 import {Text, View} from '../../../components/Themed';
-import {Link} from "expo-router";
+import {Link, useNavigation} from "expo-router";
+import {useEffect, useLayoutEffect} from "react";
+import IconBack from "../../../assets/images/arrow_back_ios_new.svg";
+import {SafeAreaThemed} from "../../../components/common/SafeAreaThemed";
+import {Header} from "../../../components/Header";
 
 export default function ProfileScreen() {
+    const navigation = useNavigation()
+
+    const goBack = () => {
+        if (navigation.canGoBack()) {
+            navigation.goBack()
+            console.log(navigation.getState())
+        }
+    }
+
     return (
-        <View style={styles.container}>
-            <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)"/>
-            <Link href={"/settings"} style={styles.title}>Go to Setting</Link>
-        </View>
+        <SafeAreaThemed>
+            <View style={styles.container}>
+                <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)"/>
+                <Link href={"/settings"} style={styles.title}>Go to Setting</Link>
+            </View>
+        </SafeAreaThemed>
     );
 }
 
