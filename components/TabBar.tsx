@@ -10,6 +10,7 @@ import IconCommunity from "../assets/images/icons/supervisor_account.svg"
 import IconCommunityActive from "../assets/images/icons/supervisor_account_active.svg"
 import IconMedia from "../assets/images/icons/video_library.svg"
 import IconMediaActive from "../assets/images/icons/video_library_active.svg"
+import {IconThemed} from "./IconThemed";
 
 export const TabBar = (props: BottomTabBarProps) => {
     const colorScheme = useColorScheme();
@@ -90,23 +91,24 @@ export const TabBarItem = ({tabBarProps, route, index}: ITabBarItem) => {
     const indexIcon = () => {
         switch (index) {
             case TabBarIndex.home: {
-                return isFocused ? <IconHomeActive width={20} height={20} fill={iconColor}/>
-                    : <IconHome width={20} height={20} fill={iconColor}/>
+                return isFocused ? <IconHomeActive width={22} height={22}/>
+                    : <IconThemed source={IconHome} width={22} height={22}/>
             }
             case TabBarIndex.media: {
-                return isFocused ? <IconMediaActive width={20} height={20} fill={iconColor}/>
-                    : <IconMedia width={20} height={20} fill={iconColor}/>
+                return isFocused ? <IconMediaActive width={22} height={22} fill={iconColor}/>
+                : <IconThemed source={IconMedia} width={22} height={22}/>
+
             }
             case TabBarIndex.communities: {
-                return isFocused ? <IconCommunityActive width={20} height={20} fill={iconColor}/>
-                    :  <IconCommunity width={20} height={20} fill={iconColor}/>
+                return isFocused ? <IconCommunityActive width={22} height={22} fill={iconColor}/>
+                    : <IconThemed source={IconCommunity} width={22} height={22}/>
             }
             case TabBarIndex.profile: {
-                return isFocused ? <IconAccountActive width={20} height={20} fill={iconColor}/>
-                    : <IconAccount width={20} height={20} fill={iconColor}/>
+                return isFocused ? <IconAccountActive width={22} height={22} fill={iconColor}/>
+                    : <IconThemed source={IconAccount} width={22} height={22}/>
             }
             default: {
-                return <IconHomeActive width={20} height={20} fill={iconColor}/>
+                return <IconThemed source={IconAccount} width={22} height={22}/>
             }
         }
     }

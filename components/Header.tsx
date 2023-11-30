@@ -1,19 +1,20 @@
 import {useThemeColor, View} from "./Themed";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
 import {Text} from "./Themed"
-import {FC, ReactNode} from "react";
-import {StyleSheet, TouchableOpacity} from "react-native";
+import {FC, ReactNode, useEffect, useRef} from "react";
+import {Animated, StyleSheet, TouchableOpacity} from "react-native";
 import IconBack from "../assets/images/arrow_back_ios_new.svg";
 import Colors from "../constants/Colors";
 import {IconThemed} from "./IconThemed";
 import {Spacer} from "./common/Spacer";
+import {SvgProps} from "react-native-svg";
 
 export interface HeaderProps {
     headerLeft?: ReactNode
     headerTitle?: string
     headerRight?: ReactNode
     haveBackground?: boolean
-    isScroll?: string
+    headerShown?: boolean
 }
 
 export const Header: FC<HeaderProps> = (
@@ -22,15 +23,18 @@ export const Header: FC<HeaderProps> = (
         headerLeft,
         headerRight,
         haveBackground,
-        isScroll
+        headerShown
     }) => {
     const insets = useSafeAreaInsets()
 
-    const backgroundColor = useThemeColor({light: Colors.light.primary, dark: Colors.dark.primary}, 'secondary');
+    const backgroundColor = useThemeColor({
+        light: Colors.light.secondaryAccent,
+        dark: Colors.dark.secondaryAccent
+    }, 'secondary');
+
+    const translation = useRef(new Animated.Value(-100)).current;
 
     const styles = StyleSheet.create({
-        button: {
-        },
         header: {
             position: "absolute",
             display: 'flex',
@@ -43,6 +47,10 @@ export const Header: FC<HeaderProps> = (
             paddingHorizontal: 8,
             width: "100%",
             top: 0,
+            zIndex: 1,
+            transform: [
+                {translateY: translation},
+            ],
         },
         title: {
             fontFamily: "RobotoMedium",
@@ -50,6 +58,7 @@ export const Header: FC<HeaderProps> = (
             textAlign: "center"
         },
         center: {
+            backgroundColor: haveBackground ? backgroundColor : 'transparent',
             flexGrow: 1,
             flexShrink: 0,
             flexBasis: 100,
@@ -70,13 +79,21 @@ export const Header: FC<HeaderProps> = (
         }
     })
 
+    useEffect(() => {
+        Animated.timing(translation, {
+            toValue: headerShown ? 0 : -100,
+            duration: 250,
+            useNativeDriver: true,
+        }).start();
+    }, [headerShown]);
+
     return (
-        <View style={styles.header}>
+        <Animated.View style={styles.header}>
             {headerLeft ?
-                <View style={styles.button}>
+                <View style={styles.left}>
                     {headerLeft}
                 </View>
-                : <Spacer size={40}/> // Fill Space
+                : <Spacer size={40}/>
             }
             {headerTitle ?
                 <View style={styles.center}>
@@ -84,26 +101,27 @@ export const Header: FC<HeaderProps> = (
                         {headerTitle}
                     </Text>
                 </View>
-                : <Spacer size={40}/> // Fill Space
+                : <View style={styles.center}><Spacer size={40}/></View>
             }
             {headerRight ?
-                <View style={{
-                    alignSelf: 'flex-end'
-                }}>
+                <View style={styles.right}>
                     {headerRight}
                 </View>
-                : <Spacer size={40}/> // Fill Space
+                : <View style={styles.right}><Spacer size={40}/></View>
             }
-        </View>
+        </Animated.View>
     )
 }
 
-export interface HeaderBackButtonProps {
-    goBack: () => void
+export interface HeaderButtonProps {
+    action: () => void,
+    icon: FC<SvgProps>,
+    width: number,
+    height: number,
 }
 
-export const HeaderBackButton: FC<HeaderBackButtonProps> = ({goBack}) => {
-    return <TouchableOpacity onPress={goBack} style={{width: 38, height: 38}}>
-        <IconThemed source={IconBack}/>
+export const HeaderButton: FC<HeaderButtonProps> = ({action, icon, width, height}) => {
+    return <TouchableOpacity onPress={action} style={{minWidth: 38, minHeight: 38}}>
+        <IconThemed source={icon} width={width} height={height}/>
     </TouchableOpacity>
 }

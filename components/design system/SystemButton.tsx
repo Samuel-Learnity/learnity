@@ -10,7 +10,7 @@ type BtnProps = {
     onPress: () => void,
     title: string,
     buttonSize?: ButtonSizeType,
-    mode?: 'text' | 'outlined' | 'contained',//  | 'elevated' | 'contained-tonal',
+    mode?: 'text' | 'outlined' | 'contained' | 'outlined-error' | 'contained-error',//  | 'elevated' | 'contained-tonal',
     isSticky?: boolean
     isLoading?: boolean
     width?: number // Percent %
@@ -28,25 +28,57 @@ export function Button(props: ButtonProps) {
     // Mode du bouton. Text par défaut
     let mode = props.mode ?? 'text'
 
-    const haveBackground = mode !== "outlined" && mode !== "text"
+    const haveBackground = mode !== "outlined" && mode !== "outlined-error" && mode !== "text"
 
     // Taille du bouton. S par défaut
     let buttonSize = props.buttonSize ?? ButtonSize_S
 
     // Primary color of the theme
-    const primaryColor = useThemeColor({light: Colors.light.secondary, dark: Colors.dark.secondary}, 'secondary')
+    let primaryColor: string
+    if (mode === 'outlined-error') {
+        primaryColor = Colors.error
+    } else {
+        primaryColor = useThemeColor({light: Colors.light.secondary, dark: Colors.dark.secondary}, 'secondary')
+    }
     // Secondary color of the theme
     const secondaryColor = useThemeColor({light: Colors.light.primary, dark: Colors.dark.primary}, 'primary')
 
-    const backgroundColor = haveBackground ? primaryColor
-        : Colors.transparent;
-    const selectedBackgroundColor = haveBackground ? Colors.transparent
-        : primaryColor;
+    let backgroundColor: string
+    let selectedBackgroundColor: string
 
-    const textColor = haveBackground ? secondaryColor
-        : primaryColor;
-    const selectedTextColor = haveBackground ? primaryColor
+    let textColor: string
+    let selectedTextColor: string = haveBackground ? primaryColor
         : secondaryColor;
+
+    switch (mode) {
+        case "contained": {
+            backgroundColor = primaryColor
+            selectedBackgroundColor = Colors.transparent
+            textColor = secondaryColor
+            selectedTextColor = primaryColor
+            break ;
+        }
+        case "outlined" : {
+            backgroundColor = Colors.transparent
+            selectedBackgroundColor = primaryColor
+            textColor = primaryColor
+            selectedTextColor = secondaryColor
+            break ;
+        }
+        case"outlined-error": {
+            backgroundColor = Colors.transparent
+            selectedBackgroundColor = primaryColor
+            textColor = primaryColor
+            selectedTextColor = secondaryColor
+            break ;
+        }
+        default: {
+            backgroundColor = Colors.transparent
+            selectedBackgroundColor = Colors.transparent
+            textColor = primaryColor
+            selectedTextColor = secondaryColor
+        }
+    }
 
     const styles = StyleSheet.create({
         container: {
@@ -83,9 +115,10 @@ export function Button(props: ButtonProps) {
 
     // Fusion des styles en fonction du theme, du mode et de l'action
     let buttonStyle = {...styles.button, ...buttonSize.button}
-    if (mode === 'outlined') {
+    if (mode === 'outlined' || mode === 'outlined-error') {
         buttonStyle = {...buttonStyle, ...styles.outline}
     }
+
     let notSelectedStyle = {...buttonStyle, ...styles.notSelected}
     let selectedStyle = {...buttonStyle, ...styles.selected}
     if (mode === 'contained') {

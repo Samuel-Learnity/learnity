@@ -11,8 +11,8 @@ interface SeparatorProps {
 export const Separator: FC<SeparatorProps> = ({marginTop, marginBottom, widthPercent}) => {
     const styles = StyleSheet.create({
         separator: {
-            marginTop: 8,
-            marginBottom: 32,
+            marginTop: marginTop,
+            marginBottom: marginBottom,
             height: 1,
             width: `${widthPercent}%`,
         }
