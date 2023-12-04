@@ -66,62 +66,70 @@ export default function ProfileScreen() {
     const isDarkTheme = useColorScheme() === 'dark';
     return (
         <View style={{height: '100%'}}>
-            <View style={[styles.headerBarContainer, {width: '100%'}]}>
-                <Header
-                    headerRight={{action: goToSettings, icon: SettingIcon, width: 32, height: 32}}
-                    haveBackground={false}
-                    headerShown={headerShown}
-                />
-            </View>
             <StickyHeaderScrollView
                 ref={scrollViewRef}
                 onScroll={onScroll}
                 onMomentumScrollEnd={onMomentumScrollEnd}
                 onScrollEndDrag={onScrollEndDrag}
+
+                /******** HEADER CONTENT HERE ********/
                 renderHeader={() =>
-                    <View style={{width: "100%", height: PARALLAX_HEIGHT}}>
+                    <View style={styles.headerContainer}>
                         <Image
                             source={{uri: 'https://w0.peakpx.com/wallpaper/251/540/HD-wallpaper-colour-patterns-blur-paint.jpg'}}
-                            style={{
-                                position: "absolute",
-                                width: "100%",
-                                height: "100%",
-                                borderBottomLeftRadius: 16,
-                                borderBottomRightRadius: 16,
-                            }}
+                            style={styles.imageHeaderBackground}
                         />
-                        <View style={{
-                            position: 'absolute',
-                            flexDirection: 'column',
-                            alignSelf: 'baseline',
-                            backgroundColor: Colors.transparent,
-                            padding: 32,
-                            width: '100%',
-                            bottom: 0
-                        }}>
-                            <Image
-                                source={{uri: "https://static.vecteezy.com/system/resources/previews/020/765/399/non_2x/default-profile-account-unknown-icon-black-silhouette-free-vector.jpg"}}
-                                style={{
-                                    width: 80,
-                                    height: 80,
-                                    borderRadius: 16,
-                                }}
-                            />
-                            <Spacer size={8}/>
-                            <Text style={{fontFamily: "RobotoCondensedBold", fontSize: 26, color: Colors.dark.textPrimary}}>Name</Text>
-                            <Spacer size={8}/>
-                            <Text style={{fontFamily: "RobotoThin", fontSize: 20, color: Colors.dark.textPrimary}}>Lorem ipsum lore doloris</Text>
-                            <View style={{flexWrap: 'wrap', flexDirection: 'row', width: '100%', backgroundColor: Colors.transparent, marginTop: 8}}>
+                        <Header
+                            headerRight={{action: goToSettings, icon: SettingIcon, width: 32, height: 32}}
+                            haveBackground={false}
+                            headerShown={headerShown}
+                        />
+                        <View style={styles.headerContent}>
+                            <View style={{
+                                flexDirection: 'row',
+                                backgroundColor: Colors.transparent,
+                            }}>
+                                <Image
+                                    source={{uri: "https://static.vecteezy.com/system/resources/previews/020/765/399/non_2x/default-profile-account-unknown-icon-black-silhouette-free-vector.jpg"}}
+                                    style={styles.imageProfile}
+                                />
 
+                                <View style={styles.statsContainer}>
+                                    <View style={styles.stats}>
+                                        <Text style={styles.statsTitle}>Post</Text>
+                                        <Text style={styles.statsNumbers}>42</Text>
+                                    </View>
+                                    <View style={styles.stats}>
+                                        <Text style={styles.statsTitle}>Abonnements</Text>
+                                        <Text style={styles.statsNumbers}>42</Text>
+                                    </View>
+                                    <View style={styles.stats}>
+                                        <Text style={styles.statsTitle}>Abonnés</Text>
+                                        <Text style={styles.statsNumbers}>28000</Text>
+                                    </View>
+                                </View>
+
+                            </View>
+
+                            <Spacer size={8}/>
+
+                            <Text style={{fontFamily: "RobotoCondensedBold", fontSize: 26}}>Name</Text>
+
+                            <Spacer size={8}/>
+
+                            <Text style={{fontFamily: "RobotoRegular", fontSize: 20}}>Lorem ipsum lore doloris</Text>
+
+                            <View style={styles.tagsContainer}>
                                 <TagView mode={"contained"} isDarkTheme={isDarkTheme} label={"Contained tag"}/>
                                 <TagView mode={"outline"} isDarkTheme={isDarkTheme} label={"Outlined tag"}/>
                                 <TagView mode={"outline-inverse"} isDarkTheme={isDarkTheme} label={"Inverse tag"}/>
-                                <TagView mode={"inverse"} isDarkTheme={isDarkTheme} label={"Inverse tag"}/>
                             </View>
+
                         </View>
                     </View>
                 }
             >
+                {/******** PAGE CONTENT HERE ********/}
                 <View style={{height: '100%'}}>
                     <Spacer size={1000}/>
                 </View>
@@ -143,4 +151,62 @@ const styles = StyleSheet.create({
         overflow: 'hidden',
         zIndex: 3,
     },
+    headerContainer: {
+        width: "100%",
+        height: PARALLAX_HEIGHT
+    },
+    tagsContainer: {
+        flexWrap: 'wrap',
+        flexDirection: 'row',
+        width: '100%',
+        backgroundColor: Colors.transparent,
+        marginTop: 8
+    },
+    headerContent: {
+        position: 'absolute',
+        flexDirection: 'column',
+        alignSelf: 'baseline',
+        backgroundColor: Colors.transparent,
+        padding: 32,
+        width: '100%',
+        bottom: 0
+    },
+    statsTitle: {
+        fontSize: 16,
+        fontFamily: 'RobotoMedium',
+    },
+    statsNumbers: {
+        fontSize: 18,
+        fontFamily: 'RobotoRegular',
+        alignSelf: "center"
+    },
+    stats: {
+        backgroundColor: Colors.transparent,
+        flexDirection: 'column',
+        marginHorizontal: 8,
+    },
+    statsContainer: {
+        position: 'absolute',
+        marginLeft: 8,
+        marginRight: -16,
+        alignSelf: 'center',
+        right: 0,
+        alignItems: 'flex-start',
+        justifyContent: 'space-around',
+        flex: 1,
+        flexDirection: 'row',
+        backgroundColor: Colors.transparent
+    },
+    imageHeaderBackground: {
+        position: "absolute",
+        width: "100%",
+        height: "100%",
+        borderBottomLeftRadius: 16,
+        borderBottomRightRadius: 16,
+    },
+    imageProfile: {
+        width: 80,
+        height: 80,
+        borderRadius: 16,
+    }
 });
