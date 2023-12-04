@@ -1,18 +1,16 @@
 import {ScrollView, StyleSheet, TouchableOpacity, useColorScheme, Image} from 'react-native';
-import {useThemeColor, View, Text} from '../../../components/Themed';
 import {useNavigation} from "expo-router";
-import {SafeAreaThemed} from "../../../components/common/SafeAreaThemed";
 import {
     StickyHeaderScrollView,
     useStickyHeaderScrollProps
 } from "react-native-sticky-parallax-header";
 import SettingIcon from '../../../assets/images/settings.svg'
 import Colors from "../../../constants/Colors";
-import {Header, HeaderButton} from "../../../components/Header";
+import {Header} from "../../../components/Header";
 import {Spacer} from "../../../components/common/Spacer";
-import {useSafeAreaInsets} from "react-native-safe-area-context";
 import {TagView} from "../../../components/design system/TagView";
-import {useEffect, useState} from "react";
+import {useState} from "react";
+import {View, Text} from "../../../components/Themed";
 
 const PARALLAX_HEIGHT = 330;
 const HEADER_BAR_HEIGHT = 92;

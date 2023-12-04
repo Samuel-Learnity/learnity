@@ -7,11 +7,11 @@ declare module "expo-router" {
   export * from 'expo-router/build';
 
   // prettier-ignore
-  type StaticRoutes = `/` | `/(auth)/_layout` | `/_layout` | `/(auth)/` | `/(auth)` | `/(auth)/login` | `/login` | `/(auth)/password_reset` | `/password_reset` | `/(auth)/register` | `/register` | `/(tabs)/(communities)/_layout` | `/(tabs)/(communities)/communities` | `/communities` | `/(tabs)/(home)/_layout` | `/(tabs)/(home)/detail` | `/detail` | `/(tabs)/(home)/home` | `/home` | `/(tabs)/(media)/_layout` | `/(tabs)/(media)/media` | `/media` | `/(tabs)/(profile)/_layout` | `/(tabs)/(profile)/profile` | `/profile` | `/(tabs)/(profile)/settings` | `/settings` | `/(tabs)/_layout` | `/+html` | `/modal`;
+  type StaticRoutes = `/` | `/(auth)/_layout` | `/_layout` | `/(auth)/` | `/(auth)` | `/(auth)/login` | `/login` | `/(auth)/password_reset` | `/password_reset` | `/(auth)/register` | `/register` | `/(tabs)/(communities)/_layout` | `/(tabs)/(communities)/communities` | `/communities` | `/(tabs)/(home)/_layout` | `/(tabs)/(home)/detail` | `/detail` | `/(tabs)/(home)/home` | `/home` | `/(tabs)/(media)/_layout` | `/(tabs)/(media)/media` | `/media` | `/(tabs)/(profile)/_layout` | `/(tabs)/(profile)/settings` | `/settings` | `/(tabs)/_layout` | `/+html` | `/modal`;
   // prettier-ignore
-  type DynamicRoutes<T extends string> = `/${CatchAllRoutePart<T>}`;
+  type DynamicRoutes<T extends string> = `/${CatchAllRoutePart<T>}` | `/(tabs)/(profile)/${SingleRoutePart<T>}` | `/${SingleRoutePart<T>}`;
   // prettier-ignore
-  type DynamicRouteTemplate = `/[...missing]`;
+  type DynamicRouteTemplate = `/[...missing]` | `/(tabs)/(profile)/[users]`;
 
   type RelativePathString = `./${string}` | `../${string}` | '..';
   type AbsoluteRoute = DynamicRouteTemplate | StaticRoutes;
