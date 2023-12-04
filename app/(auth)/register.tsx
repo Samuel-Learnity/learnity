@@ -11,29 +11,16 @@ import {Button} from "../../components/design system/SystemButton";
 import {ButtonSize_L} from "../../components/design system/ButtonStyles";
 import {useNavigation, useRouter} from "expo-router";
 import {Header} from "../../components/Header";
+import {useRegisterScreenController} from "../../hooks/auth/useRegisterScreenController";
 
 export default function LoginScreen() {
-    const navigation = useNavigation()
-    const router = useRouter()
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
-    const [passwordVerif, setPasswordVerif] = useState("")
-    const [headerShown, setHeaderShown] = useState(true);
-
-    const onGoWelcomeScreen = () => {
-        // @ts-ignore
-        navigation.navigate('index')
-    }
-
-    const goToLogin = () => {
-        // @ts-ignore
-        navigation.navigate("login")
-    }
-
-    // TODO: auth check and redirect
-    const onRegister = () => {
-        router.push("/(tabs)/(home)/home")
-    }
+    const {
+        email, setEmail,
+        password, setPassword,
+        passwordVerif, setPasswordVerif,
+        headerShown, setHeaderShown,
+        onGoWelcomeScreen, goToLogin, onRegister
+    } = useRegisterScreenController()
 
     return (
         <SafeAreaThemed>

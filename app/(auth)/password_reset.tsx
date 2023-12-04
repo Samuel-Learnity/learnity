@@ -10,18 +10,15 @@ import {Separator} from "../../components/common/Separator";
 import {logoIcon} from "../../assets/Images";
 import {Button} from "../../components/design system/SystemButton";
 import {ButtonSize_L} from "../../components/design system/ButtonStyles";
+import {useResetPasswordScreenController} from "../../hooks/auth/useResetPasswordScreenController";
 
 export default function PasswordResetScreen() {
-    const navigation = useNavigation()
-    const [email, setEmail] = useState("")
-
-    const onGoWelcomeScreen = () => {
-        navigation.goBack()
-    }
-
-    const onSubmit = () => {
-        router.push('/')
-    }
+    const {
+        onGoWelcomeScreen,
+        onSubmit,
+        email,
+        setEmail
+    } = useResetPasswordScreenController()
 
     return (
         <SafeAreaThemed>

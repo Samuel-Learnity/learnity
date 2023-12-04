@@ -5,19 +5,10 @@ import {SafeAreaThemed} from "../../components/common/SafeAreaThemed";
 import {logoIcon} from "../../assets/Images";
 import {Button} from "../../components/design system/SystemButton";
 import {ButtonSize_M} from "../../components/design system/ButtonStyles";
+import {useLoginScreenController} from "../../hooks/auth/useWelcomeScreenController";
 
 export default function LoginScreen() {
-    const navigation = useNavigation()
-
-    const goToRegister = () => {
-        // @ts-ignore
-        navigation.navigate("register")
-    }
-
-    const goToLogin = () => {
-        // @ts-ignore
-        navigation.navigate("login")
-    }
+    const { goToLogin, goToRegister } = useLoginScreenController()
 
     return (
         <SafeAreaThemed>

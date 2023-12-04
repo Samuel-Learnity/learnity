@@ -10,30 +10,21 @@ import Images, {logoIcon} from "../../assets/Images";
 import {Button} from "../../components/design system/SystemButton";
 import {ButtonSize_L} from "../../components/design system/ButtonStyles";
 import {Header} from "../../components/Header";
+import {useLoginScreenController} from "../../hooks/auth/useLoginScreenController";
 
 export default function LoginScreen() {
-    const navigation = useNavigation()
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
-    const [headerShown, setHeaderShown] = useState(true);
-
-    const onGoWelcomeScreen = () => {
-        navigation.goBack()
-    }
-
-    const goToRegister = () => {
-        // @ts-ignore
-        navigation.navigate("register")
-    }
-    const goToResetPassword = () => {
-        // @ts-ignore
-        navigation.navigate("password_reset")
-    }
-
-    // TODO: auth check and redirect
-    const onLogin = () => {
-        router.push('/(tabs)/(home)/home')
-    }
+    const {
+        onLogin,
+        onGoWelcomeScreen,
+        goToResetPassword,
+        goToRegister,
+        password,
+        setPassword,
+        email,
+        setEmail,
+        headerShown,
+        setHeaderShown,
+    } = useLoginScreenController()
 
     return (
         <SafeAreaThemed>
