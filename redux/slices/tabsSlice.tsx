@@ -1,4 +1,3 @@
-// redux/slices/tabsSlice.ts
 import { createSlice } from '@reduxjs/toolkit';
 
 interface TabsState {

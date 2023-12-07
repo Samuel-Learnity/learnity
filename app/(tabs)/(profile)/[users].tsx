@@ -41,11 +41,9 @@ export default function ProfileScreen() {
     const goBack = () => {
         if (navigation.canGoBack()) {
             navigation.goBack()
-            console.log(navigation.getState())
         }
     }
     const goToSettings = () => {
-        console.log("Go to setting")
         // @ts-ignore
         navigation.navigate('settings')
     }
@@ -55,10 +53,8 @@ export default function ProfileScreen() {
 
         if (scrolling > 100) {
             setHeaderShown(false);
-            console.log("SCROLL > 100", scrolling)
         } else {
             setHeaderShown(true);
-            console.log("SCROLL <= 100", scrolling)
         }
     }
     const isDarkTheme = useColorScheme() === 'dark';

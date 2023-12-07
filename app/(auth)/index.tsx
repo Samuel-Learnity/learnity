@@ -5,10 +5,11 @@ import {SafeAreaThemed} from "../../components/common/SafeAreaThemed";
 import {logoIcon} from "../../assets/Images";
 import {Button} from "../../components/design system/SystemButton";
 import {ButtonSize_M} from "../../components/design system/ButtonStyles";
-import {useLoginScreenController} from "../../hooks/auth/useWelcomeScreenController";
+import {useWelcomeScreenController} from "../../hooks/auth/useWelcomeScreenController";
+import {useEffect} from "react";
 
 export default function LoginScreen() {
-    const { goToLogin, goToRegister } = useLoginScreenController()
+    const { goToLogin, goToRegister } = useWelcomeScreenController()
 
     return (
         <SafeAreaThemed>

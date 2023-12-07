@@ -30,7 +30,6 @@ export const useRegisterScreenController = () => {
 
     // TODO: auth check and redirect
     const onRegister = () => {
-        console.log('onLogin Controller')
         if (password != "" && email != "") {
             handleRegister({email: email, password: password, username: "name_default"})
         }
@@ -42,6 +41,8 @@ export const useRegisterScreenController = () => {
             router.push('/(tabs)/(home)/home')
         } else if (status === 'loading') {
             console.log('loading')
+        } else if (status === 'failed') {
+            console.log('failed')
         }
     }, [status]);
 

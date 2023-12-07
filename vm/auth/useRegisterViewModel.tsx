@@ -11,7 +11,6 @@ export const useRegisterViewModel = () => {
     } = useSelector((state: RootState) => state.auth);
 
     const handleRegister = (payload: {email: string, password: string, username: string}) => {
-        console.log('handle Register', payload)
         dispatch(registerUser(payload));
     };
 
@@ -19,7 +18,7 @@ export const useRegisterViewModel = () => {
         status,
         error,
         token,
-        handleRegister,  // Si tu veux exposer la fonction de connexion directement
+        handleRegister,
     };
 }
 

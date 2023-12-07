@@ -1,6 +1,13 @@
 import {useDispatch, useSelector} from 'react-redux';
-import {loginUser, selectAuth} from "../../redux/slices/authSlice";
+import {loginUser} from "../../redux/slices/authSlice";
 import {AppDispatch, RootState} from "../../redux/store";
+import {useEffect} from "react";
+import Cookies from 'js-cookie';
+
+type HandleLoginProps = {
+    email: string,
+    password: string
+}
 
 export const useLoginViewModel = () => {
     const dispatch = useDispatch<AppDispatch>();
@@ -10,16 +17,15 @@ export const useLoginViewModel = () => {
         token
     } = useSelector((state: RootState) => state.auth);
 
-    const handleLogin = (payload: {email: string, password: string}) => {
-        console.log('handle login', payload)
-        dispatch(loginUser(payload));
+    const handleLogin = (payload: HandleLoginProps) => {
+        dispatch(loginUser(payload))
     };
 
     return {
         status,
         error,
         token,
-        handleLogin,  // Si tu veux exposer la fonction de connexion directement
+        handleLogin,
     };
 }
 
