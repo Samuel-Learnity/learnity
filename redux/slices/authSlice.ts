@@ -1,4 +1,4 @@
-import {createSlice, createAsyncThunk, AsyncThunk} from '@reduxjs/toolkit';
+import {AsyncThunk, createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import {axiosInstance} from "../../axios";
 import {AsyncThunkConfig} from "@reduxjs/toolkit/src/createAsyncThunk";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -26,7 +26,6 @@ export const fetchUser: AsyncThunk<any, { token: string }, AsyncThunkConfig> =
         async (credentials) => {
             try {
                 const response = await axiosInstance.post('/user', credentials);
-                console.log("fetch request", response.data)
                 return response.data
             } catch (error) {
                 // @ts-ignore
@@ -77,6 +76,8 @@ const authSlice = createSlice({
             state.token = null;
             state.status = 'idle';
             state.error = null;
+            state.user = null;
+            AsyncStorage.removeItem('@jwtToken');
         },
     },
     extraReducers: (builder) => {
@@ -107,6 +108,7 @@ const authSlice = createSlice({
                 state.status = 'succeeded';
                 state.token = action.payload.token;
                 state.error = null;
+                AsyncStorage.setItem('@jwtToken', action.payload.token);
                 console.log('STATE ========= SUCCEEDED')
             })
             .addCase(registerUser.rejected, (state, action) => {

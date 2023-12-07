@@ -1,5 +1,5 @@
 import {router, useNavigation} from "expo-router";
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
 import useAuthViewModel from "../../vm/auth/useAuthViewModel";
 
 export const useWelcomeScreenController = () => {
@@ -32,10 +32,10 @@ export const useWelcomeScreenController = () => {
 
     useEffect(() => {
         if (token) {
-            console.log('Have token');
-
             // Dispatch the fetchUser action to get the user based on the token
             handleAutoLogin();
+        } else {
+            goToLogin()
         }
     }, [token]);
 

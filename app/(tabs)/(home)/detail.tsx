@@ -1,7 +1,7 @@
 import {StyleSheet} from 'react-native';
-import {Text, View} from '../../../components/Themed';
+import {Text} from '../../../components/Themed';
 import {Separator} from "../../../components/common/Separator";
-import {Header, HeaderButton} from "../../../components/Header";
+import {Header} from "../../../components/Header";
 import {useNavigation} from "expo-router";
 import {SafeAreaThemed} from "../../../components/common/SafeAreaThemed";
 import {useState} from "react";

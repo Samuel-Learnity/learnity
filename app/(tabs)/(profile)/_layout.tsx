@@ -1,6 +1,4 @@
-import {Stack, useNavigation} from 'expo-router';
-import IconBack from '../../../assets/images/arrow_back_ios_new.svg'
-import {TouchableOpacity} from "react-native";
+import {Stack} from 'expo-router';
 
 export default function ProfileLayout() {
 

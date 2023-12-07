@@ -1,43 +1,33 @@
-import {
-    Animated,
-    NativeScrollEvent,
-    NativeSyntheticEvent, Platform,
-    StyleSheet,
-    TouchableOpacity,
-    useColorScheme
-} from 'react-native';
+import {Platform, ScrollView, StyleSheet} from 'react-native';
 import {Text, useThemeColor, View} from '../../../components/Themed';
-import {Header, HeaderButton} from "../../../components/Header";
+import {Header} from "../../../components/Header";
 import IconBack from "../../../assets/images/arrow_back_ios_new.svg";
-import IconSettings from "../../../assets/images/settings.svg";
-import {useNavigation} from "expo-router";
 import {SafeAreaThemed} from "../../../components/common/SafeAreaThemed";
-import {ScrollView} from "react-native";
-import card from "react-native-paper/src/components/Card/Card";
 import Colors from "../../../constants/Colors";
 import {TextInput} from "react-native-paper";
-import {useState} from "react";
 import {Button} from "../../../components/design system/SystemButton";
 import {Spacer} from "../../../components/common/Spacer";
 import {Separator} from "../../../components/common/Separator";
-import {inspect} from "util";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
+import {useSettingsScreenController} from "../../../hooks/tabs/profile/useSettingsScreenController";
 
 export default function SettingsScreen() {
-    const navigation = useNavigation()
-    const borderColor = useThemeColor({
-        light: Colors.light.primaryAccent,
-        dark: Colors.dark.primaryAccent
-    }, 'secondary');
-
-    const [email, setEmail] = useState("")
-    const [oldPassword, setOldPassword] = useState("")
-    const [newPassword, setNewPassword] = useState("")
-    const [headerShown, setHeaderShown] = useState(true);
+    const {
+        email, setEmail,
+        oldPassword, setOldPassword,
+        headerShown, setHeaderShown,
+        newPassword, setNewPassword,
+        goBack, onUpdateEmail, onUpdatePassword, handleScroll, onDisconnect, onDeleteAccount
+    } = useSettingsScreenController()
 
     const insets = useSafeAreaInsets()
 
     const edgeTop = Platform.OS === "ios" ? insets.top + 24: insets.top + 72;
+
+    const borderColor = useThemeColor({
+        light: Colors.light.primaryAccent,
+        dark: Colors.dark.primaryAccent
+    }, 'secondary');
 
     const styles = StyleSheet.create({
         container: {
@@ -74,39 +64,6 @@ export default function SettingsScreen() {
             width: '100%',
         },
     });
-
-    const goBack = () => {
-        if (navigation.canGoBack()) {
-            navigation.goBack()
-        }
-    }
-
-    const onUpdateEmail = () => {
-        //
-
-    }
-
-    const onUpdatePassword = () => {
-
-        //
-    }
-    const handleScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
-        const scrolling = e.nativeEvent.contentOffset.y;
-
-        if (scrolling > 100) {
-            setHeaderShown(false);
-        } else {
-            setHeaderShown(true);
-        }
-    }
-
-    const onDisconnect = () => {
-        //
-
-    }
-    const onDeleteAccount = () => {
-        //
-    }
 
     return (
         <SafeAreaThemed>
@@ -164,8 +121,8 @@ export default function SettingsScreen() {
 
                     <Separator marginTop={16} marginBottom={0} widthPercent={80}/>
 
-                    <Button onPress={onDeleteAccount} title={'Disconnect'} mode={'contained'} width={80} marginVertical={16}/>
-                    <Button onPress={onDisconnect} title={'Delete Account'} mode={'outlined-error'} width={80}/>
+                    <Button onPress={onDisconnect} title={'Disconnect'} mode={'contained'} width={80} marginVertical={16}/>
+                    <Button onPress={onDeleteAccount} title={'Delete Account'} mode={'outlined-error'} width={80}/>
                 </View>
 
                 <Spacer size={72}/>

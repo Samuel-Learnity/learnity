@@ -1,5 +1,5 @@
 import {useDispatch, useSelector} from 'react-redux';
-import {loginUser, registerUser, selectAuth} from "../../redux/slices/authSlice";
+import {registerUser} from "../../redux/slices/authSlice";
 import {AppDispatch, RootState} from "../../redux/store";
 
 export const useRegisterViewModel = () => {

@@ -1,5 +1,5 @@
 import {BottomTabBarProps} from "@react-navigation/bottom-tabs";
-import {Platform, StyleSheet, TouchableOpacity, useColorScheme} from "react-native";
+import {StyleSheet, TouchableOpacity, useColorScheme} from "react-native";
 import {View} from "./Themed";
 import IconHome from "../assets/images/icons/home.svg"
 import IconHomeActive from "../assets/images/icons/home_active.svg"

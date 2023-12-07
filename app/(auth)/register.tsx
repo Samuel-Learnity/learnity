@@ -1,15 +1,12 @@
-import {StyleSheet, TouchableOpacity} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {Image} from 'expo-image';
 import {Text, View} from '../../components/Themed';
 import {TextInput} from "react-native-paper";
-import {useState} from "react";
 import {Spacer} from "../../components/common/Spacer";
 import {SafeAreaThemed} from "../../components/common/SafeAreaThemed";
-import {Separator} from "../../components/common/Separator";
 import Images, {logoIcon} from "../../assets/Images";
 import {Button} from "../../components/design system/SystemButton";
 import {ButtonSize_L} from "../../components/design system/ButtonStyles";
-import {useNavigation, useRouter} from "expo-router";
 import {Header} from "../../components/Header";
 import {useRegisterScreenController} from "../../hooks/auth/useRegisterScreenController";
 

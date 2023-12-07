@@ -1,8 +1,6 @@
 import {router, useNavigation} from "expo-router";
 import {useEffect, useState} from "react";
 import useLoginViewModel from "../../vm/auth/useLoginViewModel";
-import CookieManager from '@react-native-cookies/cookies';
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const useLoginScreenController = () => {
     const navigation = useNavigation()
@@ -36,16 +34,6 @@ export const useLoginScreenController = () => {
             handleLogin({email: email, password: password})
         }
     }
-
-    useEffect(() => {
-        if (status === 'succeeded') {
-            router.push('/(tabs)/(home)/home')
-        } else if (status === 'loading') {
-            console.log('loading')
-        } else if (status === 'failed') {
-            console.log('failed')
-        }
-    }, [status]);
 
     return {
         email, setEmail,

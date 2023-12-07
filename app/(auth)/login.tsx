@@ -1,9 +1,7 @@
-import {StyleSheet, TouchableOpacity} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {Image} from 'expo-image';
 import {Text, View as ThemedView} from '../../components/Themed';
-import {router, useNavigation} from "expo-router";
 import {TextInput} from "react-native-paper";
-import {useState} from "react";
 import {Spacer} from "../../components/common/Spacer";
 import {SafeAreaThemed} from "../../components/common/SafeAreaThemed";
 import Images, {logoIcon} from "../../assets/Images";

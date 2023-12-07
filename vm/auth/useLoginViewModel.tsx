@@ -1,8 +1,6 @@
 import {useDispatch, useSelector} from 'react-redux';
 import {loginUser} from "../../redux/slices/authSlice";
 import {AppDispatch, RootState} from "../../redux/store";
-import {useEffect} from "react";
-import Cookies from 'js-cookie';
 
 type HandleLoginProps = {
     email: string,

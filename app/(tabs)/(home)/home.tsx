@@ -1,7 +1,7 @@
 import {Pressable, StyleSheet} from 'react-native';
 import {Text, View} from '../../../components/Themed';
 import {Separator} from "../../../components/common/Separator";
-import {Link, useNavigation, router} from "expo-router";
+import {useNavigation} from "expo-router";
 
 export default function HomeScreen() {
     const navigation = useNavigation()

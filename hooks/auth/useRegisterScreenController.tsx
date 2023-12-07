@@ -1,6 +1,5 @@
-import {router, useNavigation, useRouter} from "expo-router";
+import {useNavigation, useRouter} from "expo-router";
 import {useEffect, useState} from "react";
-import useLoginViewModel from "../../vm/auth/useLoginViewModel";
 import useRegisterViewModel from "../../vm/auth/useRegisterViewModel";
 
 export const useRegisterScreenController = () => {
@@ -35,16 +34,7 @@ export const useRegisterScreenController = () => {
         }
     }
 
-    useEffect(() => {
-        if (status === 'succeeded') {
-            console.log('ROUTER PUSH TABS')
-            router.push('/(tabs)/(home)/home')
-        } else if (status === 'loading') {
-            console.log('loading')
-        } else if (status === 'failed') {
-            console.log('failed')
-        }
-    }, [status]);
+
 
     return {
         email, setEmail,

@@ -1,14 +1,15 @@
-import store, {AppDispatch, RootState} from "../../redux/store";
-import {fetchUser, setToken} from "../../redux/slices/authSlice";
 import {useDispatch, useSelector} from "react-redux";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import store, {AppDispatch, RootState} from "../../../redux/store";
+import {logoutUser, setToken} from "../../../redux/slices/authSlice";
 
-export const useAuthViewModel = () => {
+export const useSettingsViewModel = () => {
     const dispatch = useDispatch<AppDispatch>();
     const {
         status,
         error,
-        token
+        token,
+        user
     } = useSelector((state: RootState) => state.auth);
 
     const retrieveTokenFromCookies = async () => {
@@ -21,20 +22,17 @@ export const useAuthViewModel = () => {
         return false
     };
 
-    const handleAutoLogin = async () => {
-        // Dispatch the fetchUser action to fetch the user based on the token
-        if (token) {
-            await dispatch(fetchUser({token}));
-        }
+    const handleDisconnect = async () => {
+        dispatch(logoutUser());
     };
 
     return {
         status,
         error,
         token,
-        handleAutoLogin,
-        retrieveTokenFromCookies,
+        user,
+        handleDisconnect,
     };
 }
 
-export default useAuthViewModel;
+export default useSettingsViewModel;

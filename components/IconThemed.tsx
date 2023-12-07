@@ -2,7 +2,7 @@ import {FC} from "react";
 import {SvgProps} from "react-native-svg";
 import {DimensionValue, StyleSheet} from "react-native";
 import MaskedView from "@react-native-masked-view/masked-view";
-import {View, Text} from "./Themed";
+import {View} from "./Themed";
 import Colors from "../constants/Colors";
 
 export interface IconThemedProps extends SvgProps{

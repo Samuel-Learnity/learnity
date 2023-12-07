@@ -1,12 +1,9 @@
 import {StyleSheet, TouchableOpacity} from 'react-native';
 import {Image} from 'expo-image';
 import {Text, View as ThemedView} from '../../components/Themed';
-import {router, useNavigation} from "expo-router";
 import {TextInput} from "react-native-paper";
-import {useState} from "react";
 import {Spacer} from "../../components/common/Spacer";
 import {SafeAreaThemed} from "../../components/common/SafeAreaThemed";
-import {Separator} from "../../components/common/Separator";
 import {logoIcon} from "../../assets/Images";
 import {Button} from "../../components/design system/SystemButton";
 import {ButtonSize_L} from "../../components/design system/ButtonStyles";
