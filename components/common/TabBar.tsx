@@ -1,15 +1,15 @@
 import {BottomTabBarProps} from "@react-navigation/bottom-tabs";
 import {StyleSheet, TouchableOpacity, useColorScheme} from "react-native";
-import {View} from "./Themed";
-import IconHome from "../assets/images/icons/home.svg"
-import IconHomeActive from "../assets/images/icons/home_active.svg"
-import IconAccount from "../assets/images/icons/account_circle.svg"
-import IconAccountActive from "../assets/images/icons/account_circle_active.svg"
-import IconCommunity from "../assets/images/icons/supervisor_account.svg"
-import IconCommunityActive from "../assets/images/icons/supervisor_account_active.svg"
-import IconMedia from "../assets/images/icons/video_library.svg"
-import IconMediaActive from "../assets/images/icons/video_library_active.svg"
-import {IconThemed} from "./IconThemed";
+import {View} from "../Themed";
+import IconHome from "../../assets/images/icons/home.svg"
+import IconHomeActive from "../../assets/images/icons/home_active.svg"
+import IconAccount from "../../assets/images/icons/account_circle.svg"
+import IconAccountActive from "../../assets/images/icons/account_circle_active.svg"
+import IconCommunity from "../../assets/images/icons/supervisor_account.svg"
+import IconCommunityActive from "../../assets/images/icons/supervisor_account_active.svg"
+import IconMedia from "../../assets/images/icons/video_library.svg"
+import IconMediaActive from "../../assets/images/icons/video_library_active.svg"
+import {IconThemed} from "../IconThemed";
 
 export const TabBar = (props: BottomTabBarProps) => {
     const colorScheme = useColorScheme();
@@ -31,7 +31,8 @@ export const TabBar = (props: BottomTabBarProps) => {
                     return <TabBarItem tabBarProps={props}
                                        route={route}
                                        index={index}
-                                       key={index}/>
+                                       key={index}
+                    />
                 })}
             </View>
         </View>

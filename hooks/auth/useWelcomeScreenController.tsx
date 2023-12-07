@@ -1,5 +1,5 @@
 import {router, useNavigation} from "expo-router";
-import {useEffect} from "react";
+import {useCallback, useEffect} from "react";
 import useAuthViewModel from "../../vm/auth/useAuthViewModel";
 
 export const useWelcomeScreenController = () => {
@@ -12,35 +12,37 @@ export const useWelcomeScreenController = () => {
         error
     } = useAuthViewModel()
 
-    const goToRegister = () => {
+    const goToRegister = useCallback(() => {
         // @ts-ignore
         navigation.navigate("register")
-    }
+    },[])
 
-    const goToLogin = () => {
+    const goToLogin = useCallback(() => {
         // @ts-ignore
         navigation.navigate("login")
-    }
+    },[])
 
-    const autoLogin = async () => {
+    const autoLogin = useCallback(async () => {
         await retrieveTokenFromCookies()
-    };
+    }, [token]);
 
     useEffect(() => {
-        autoLogin();
+        autoLogin()
     }, []);
 
     useEffect(() => {
         if (token) {
-            // Dispatch the fetchUser action to get the user based on the token
             handleAutoLogin();
         } else {
+            // Ne marche pas lors de la première ouverture de l'app
             goToLogin()
         }
     }, [token]);
 
+
     useEffect(() => {
         if (status === 'succeeded') {
+            // Si Login, Register, Autologin ont réussit -> GoToApp
             router.push('/(tabs)/(home)/home')
         } else if (status === 'loading') {
             console.log('loading')
@@ -49,5 +51,5 @@ export const useWelcomeScreenController = () => {
         }
     }, [status]);
 
-    return { goToRegister, goToLogin }
+    return {goToRegister, goToLogin}
 }

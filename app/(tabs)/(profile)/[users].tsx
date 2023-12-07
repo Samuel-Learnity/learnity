@@ -3,11 +3,12 @@ import {useNavigation} from "expo-router";
 import {StickyHeaderScrollView, useStickyHeaderScrollProps} from "react-native-sticky-parallax-header";
 import SettingIcon from '../../../assets/images/settings.svg'
 import Colors from "../../../constants/Colors";
-import {Header} from "../../../components/Header";
+import {Header} from "../../../components/common/Header";
 import {Spacer} from "../../../components/common/Spacer";
 import {TagView} from "../../../components/design system/TagView";
 import {useState} from "react";
 import {Text, View} from "../../../components/Themed";
+import {useSettingsScreenController} from "../../../hooks/tabs/profile/useProfileScreenController";
 
 const PARALLAX_HEIGHT = 330;
 const HEADER_BAR_HEIGHT = 92;
@@ -15,7 +16,12 @@ const SNAP_START_THRESHOLD = 100;
 const SNAP_STOP_THRESHOLD = 330;
 
 export default function ProfileScreen() {
-    const navigation = useNavigation()
+    const {
+        headerShown, setHeaderShown,
+        isDarkTheme, goToSettings,
+        user
+    } = useSettingsScreenController()
+
     const {
         onMomentumScrollEnd,
         onScroll,
@@ -23,27 +29,12 @@ export default function ProfileScreen() {
         scrollHeight,
         scrollValue,
         scrollViewRef,
-        // useStickyHeaderScrollProps is generic and need to know
-        // which component (ScrollView, FlatList<ItemT> or SectionList<ItemT, SectionT>)
-        // will be enhanced with sticky scroll props
     } = useStickyHeaderScrollProps<ScrollView>({
         parallaxHeight: PARALLAX_HEIGHT,
         snapStartThreshold: SNAP_START_THRESHOLD,
         snapStopThreshold: SNAP_STOP_THRESHOLD,
         snapToEdge: true,
     });
-
-    const [headerShown, setHeaderShown] = useState(true);
-
-    const goBack = () => {
-        if (navigation.canGoBack()) {
-            navigation.goBack()
-        }
-    }
-    const goToSettings = () => {
-        // @ts-ignore
-        navigation.navigate('settings')
-    }
 
     const handleScroll = (e: any) => {
         const scrolling = e.contentOffset.y;
@@ -54,7 +45,7 @@ export default function ProfileScreen() {
             setHeaderShown(true);
         }
     }
-    const isDarkTheme = useColorScheme() === 'dark';
+
     return (
         <View style={{height: '100%'}}>
             <StickyHeaderScrollView
@@ -104,7 +95,7 @@ export default function ProfileScreen() {
 
                             <Spacer size={8}/>
 
-                            <Text style={{fontFamily: "RobotoCondensedBold", fontSize: 26}}>Name</Text>
+                            <Text style={{fontFamily: "RobotoCondensedBold", fontSize: 26}}>{user?.username ?? "name"}</Text>
 
                             <Spacer size={8}/>
 

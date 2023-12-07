@@ -16,6 +16,7 @@ export const useSettingsScreenController = () => {
         status,
         error,
         token,
+        user,
     } = useSettingsViewModel()
 
     const goBack = () => {
@@ -52,6 +53,7 @@ export const useSettingsScreenController = () => {
     }
 
     return {
+        user,
         email, setEmail,
         oldPassword, setOldPassword,
         headerShown, setHeaderShown,

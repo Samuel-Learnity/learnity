@@ -7,7 +7,7 @@ import {SafeAreaThemed} from "../../components/common/SafeAreaThemed";
 import Images, {logoIcon} from "../../assets/Images";
 import {Button} from "../../components/design system/SystemButton";
 import {ButtonSize_L} from "../../components/design system/ButtonStyles";
-import {Header} from "../../components/Header";
+import {Header} from "../../components/common/Header";
 import {useLoginScreenController} from "../../hooks/auth/useLoginScreenController";
 
 export default function LoginScreen() {

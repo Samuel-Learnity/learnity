@@ -125,7 +125,7 @@ const authSlice = createSlice({
             .addCase(fetchUser.fulfilled, (state, action) => {
                 state.status = 'succeeded';
                 state.user = action.payload;
-                console.log('STATE ========= FETCH USER SUCCEEDED');
+                console.log('STATE ========= FETCH USER SUCCEEDED', state.user);
             })
             .addCase(fetchUser.rejected, (state, action) => {
                 state.status = 'failed';

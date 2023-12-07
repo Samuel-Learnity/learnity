@@ -3,7 +3,7 @@ import {Animated, Pressable, StyleSheet} from "react-native";
 import {ThemeProps, useThemeColor, View} from "../Themed";
 import Colors from "../../constants/Colors";
 import {ButtonSize_S, ButtonSizeType} from "./ButtonStyles";
-import {RobotoText} from "../StyledText";
+import {RobotoText} from "./StyledText";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
 
 type BtnProps = {

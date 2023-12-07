@@ -7,14 +7,14 @@ import {SafeAreaThemed} from "../../components/common/SafeAreaThemed";
 import Images, {logoIcon} from "../../assets/Images";
 import {Button} from "../../components/design system/SystemButton";
 import {ButtonSize_L} from "../../components/design system/ButtonStyles";
-import {Header} from "../../components/Header";
+import {Header} from "../../components/common/Header";
 import {useRegisterScreenController} from "../../hooks/auth/useRegisterScreenController";
 
 export default function LoginScreen() {
     const {
         email, setEmail,
         password, setPassword,
-        passwordVerif, setPasswordVerif,
+        username, setUsername,
         headerShown, setHeaderShown,
         onGoWelcomeScreen, goToLogin, onRegister
     } = useRegisterScreenController()
@@ -36,32 +36,32 @@ export default function LoginScreen() {
             <Text style={styles.title}>Inscription</Text>
             <View style={styles.form}>
                 <TextInput
-                    label="Email"
+                    label="Username"
                     style={styles.input}
                     mode={'outlined'}
-                    value={email}
-                    onChangeText={e => setEmail(e)}
+                    value={username}
+                    onChangeText={e => setUsername(e)}
                 />
-                {email !== '' &&
+                {username !== '' &&
                     <>
                         <Spacer size={16}/>
                         <TextInput
-                            label="Mot de passe"
+                            label="Email"
                             style={styles.input}
                             mode={'outlined'}
-                            value={password}
-                            secureTextEntry={true}
-                            onChangeText={e => setPassword(e)}
+                            value={email}
+                            onChangeText={e => setEmail(e)}
                         />
+
                         <Spacer size={16}/>
-                        {password !== "" &&
+                        {email !== "" &&
                             <TextInput
                                 label="Mot de passe"
                                 style={styles.input}
                                 mode={'outlined'}
-                                value={passwordVerif}
+                                value={password}
                                 secureTextEntry={true}
-                                onChangeText={e => setPasswordVerif(e)}
+                                onChangeText={e => setPassword(e)}
                             />
                         }
                     </>

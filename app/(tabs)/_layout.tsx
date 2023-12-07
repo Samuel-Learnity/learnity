@@ -1,5 +1,5 @@
 import {Tabs} from 'expo-router';
-import {TabBar} from "../../components/TabBar";
+import {TabBar} from "../../components/common/TabBar";
 import {Platform} from "react-native";
 import {BlurView} from "expo-blur";
 

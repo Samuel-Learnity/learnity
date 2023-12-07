@@ -1,6 +1,6 @@
 import {Platform, ScrollView, StyleSheet} from 'react-native';
 import {Text, useThemeColor, View} from '../../../components/Themed';
-import {Header} from "../../../components/Header";
+import {Header} from "../../../components/common/Header";
 import IconBack from "../../../assets/images/arrow_back_ios_new.svg";
 import {SafeAreaThemed} from "../../../components/common/SafeAreaThemed";
 import Colors from "../../../constants/Colors";
@@ -13,6 +13,7 @@ import {useSettingsScreenController} from "../../../hooks/tabs/profile/useSettin
 
 export default function SettingsScreen() {
     const {
+        user,
         email, setEmail,
         oldPassword, setOldPassword,
         headerShown, setHeaderShown,
@@ -89,6 +90,7 @@ export default function SettingsScreen() {
                             style={styles.input}
                             mode={'outlined'}
                             value={email}
+                            placeholder={user?.email ?? ""}
                             onChangeText={e => setEmail(e)}
                         />
                         <Spacer size={16}/>

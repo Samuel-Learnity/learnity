@@ -7,7 +7,7 @@ export const useRegisterScreenController = () => {
     const router = useRouter()
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
-    const [passwordVerif, setPasswordVerif] = useState("")
+    const [username, setUsername] = useState("")
     const [headerShown, setHeaderShown] = useState(true);
 
     const {
@@ -30,7 +30,7 @@ export const useRegisterScreenController = () => {
     // TODO: auth check and redirect
     const onRegister = () => {
         if (password != "" && email != "") {
-            handleRegister({email: email, password: password, username: "name_default"})
+            handleRegister({email: email, password: password, username: username})
         }
     }
 
@@ -39,7 +39,7 @@ export const useRegisterScreenController = () => {
     return {
         email, setEmail,
         password, setPassword,
-        passwordVerif, setPasswordVerif,
+        username, setUsername,
         headerShown, setHeaderShown,
         onGoWelcomeScreen, goToLogin, onRegister
     }

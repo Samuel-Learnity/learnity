@@ -1,10 +1,10 @@
-import {Text, useThemeColor, View} from "./Themed";
+import {Text, useThemeColor, View} from "../Themed";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
 import {FC, useEffect, useRef} from "react";
 import {Animated, StyleSheet, TouchableOpacity} from "react-native";
-import Colors from "../constants/Colors";
-import {IconThemed} from "./IconThemed";
-import {Spacer} from "./common/Spacer";
+import Colors from "../../constants/Colors";
+import {IconThemed} from "../IconThemed";
+import {Spacer} from "./Spacer";
 import {SvgProps} from "react-native-svg";
 
 export interface HeaderProps {
