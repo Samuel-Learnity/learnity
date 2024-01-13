@@ -44,12 +44,12 @@ function RootLayoutNav() {
         <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
             <Provider store={store}>
                 <PaperProvider>
-                <Stack>
-                    <Stack.Screen name="(auth)" options={{headerShown: false}}/>
-                    <Stack.Screen name="(tabs)" options={{headerShown: false, gestureEnabled: false}}/>
-                    <Stack.Screen name="modal" options={{presentation: 'modal'}}/>
-                </Stack>
-            </PaperProvider>
+                    <Stack>
+                        <Stack.Screen name="(auth)" options={{headerShown: false}}/>
+                        <Stack.Screen name="(tabs)" options={{headerShown: false, gestureEnabled: false}}/>
+                        <Stack.Screen name="modal" options={{presentation: 'modal'}}/>
+                    </Stack>
+                </PaperProvider>
             </Provider>
         </ThemeProvider>
     );

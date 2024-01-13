@@ -17,7 +17,7 @@ export default function LoginScreen() {
                 style={styles.logo}
                 contentFit={"contain"}
             />
-
+            
             <Button
                 title={"Se connecter"}
                 mode="outlined"
@@ -28,6 +28,15 @@ export default function LoginScreen() {
                 buttonSize={ButtonSize_M}
             />
 
+            <Button
+                title={"S'enregistrer"}
+                mode="contained"
+                onPress={() => goToRegister()}
+                width={80}
+                marginHorizontal={8}
+                marginVertical={8}
+                buttonSize={ButtonSize_M}
+            />
             <Button
                 title={"S'enregistrer"}
                 mode="contained"

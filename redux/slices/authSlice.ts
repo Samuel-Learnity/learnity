@@ -2,22 +2,19 @@ import {AsyncThunk, createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import {axiosInstance} from "../../axios";
 import {AsyncThunkConfig} from "@reduxjs/toolkit/src/createAsyncThunk";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import {User} from "../../types/user";
+import {UserTypes} from "../../types/userTypes";
+import {Animated} from "react-native";
+import delay = Animated.delay;
 
 interface AuthState {
     token: string | null;
     status: 'idle' | 'loading' | 'succeeded' | 'failed';
     error: string | null;
-    user: User | null
+    user: UserTypes | null
 }
 
 export interface AuthResponse {
     token: string;
-}
-
-export interface fetchUserResponse {
-    username: string
-    email: string
 }
 
 export const fetchUser: AsyncThunk<any, { token: string }, AsyncThunkConfig> =
@@ -28,6 +25,7 @@ export const fetchUser: AsyncThunk<any, { token: string }, AsyncThunkConfig> =
                 const response = await axiosInstance.post('/user', credentials);
                 return response.data
             } catch (error) {
+                console.log("fetchUserFailed")
                 // @ts-ignore
                 throw new Error(error.message);
             }
@@ -85,52 +83,43 @@ const authSlice = createSlice({
             // Login use cases
             .addCase(loginUser.pending, (state) => {
                 state.status = 'loading';
-                console.log('STATE ========= LOADING')
             })
             .addCase(loginUser.fulfilled, (state, action) => {
                 state.status = 'succeeded';
                 state.token = action.payload.token;
                 AsyncStorage.setItem('@jwtToken', action.payload.token);
-                console.log('STATE ========= SUCCEEDED')
             })
             .addCase(loginUser.rejected, (state, action) => {
                 state.status = 'failed';
                 state.error = action.error.message || null;
-                console.log('STATE ========= ERROR', action.error.message)
             })
 
             // Register use cases
             .addCase(registerUser.pending, (state) => {
                 state.status = 'loading';
-                console.log('STATE ========= LOADING')
             })
             .addCase(registerUser.fulfilled, (state, action) => {
                 state.status = 'succeeded';
                 state.token = action.payload.token;
                 state.error = null;
                 AsyncStorage.setItem('@jwtToken', action.payload.token);
-                console.log('STATE ========= SUCCEEDED')
             })
             .addCase(registerUser.rejected, (state, action) => {
                 state.status = 'failed';
                 state.error = action.error.message || 'Registration failed';
-                console.log('STATE ========= ERROR', action.error.message)
             })
 
             // FETCH USER PROFILE USE CASES
             .addCase(fetchUser.pending, (state) => {
                 state.status = 'loading';
-                console.log('STATE ========= FETCH USER LOADING');
             })
             .addCase(fetchUser.fulfilled, (state, action) => {
                 state.status = 'succeeded';
                 state.user = action.payload;
-                console.log('STATE ========= FETCH USER SUCCEEDED', state.user);
             })
             .addCase(fetchUser.rejected, (state, action) => {
                 state.status = 'failed';
                 state.error = action.error.message || 'Fetch user failed';
-                console.log('STATE ========= FETCH USER ERROR', action.error.message);
             });
     },
 });

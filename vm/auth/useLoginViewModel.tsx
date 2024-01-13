@@ -12,7 +12,7 @@ export const useLoginViewModel = () => {
     const {
         status,
         error,
-        token
+        token,
     } = useSelector((state: RootState) => state.auth);
 
     const handleLogin = (payload: HandleLoginProps) => {

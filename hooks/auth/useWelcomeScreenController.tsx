@@ -32,22 +32,23 @@ export const useWelcomeScreenController = () => {
 
     useEffect(() => {
         if (token) {
+            console.log('have token')
             handleAutoLogin();
         } else {
             // Ne marche pas lors de la première ouverture de l'app
+            console.log('go to login')
             goToLogin()
         }
     }, [token]);
-
 
     useEffect(() => {
         if (status === 'succeeded') {
             // Si Login, Register, Autologin ont réussit -> GoToApp
             router.push('/(tabs)/(home)/home')
         } else if (status === 'loading') {
-            console.log('loading')
+            console.log('autologin loading')
         } else if (status === 'failed') {
-            console.log('failed')
+            console.log('autologin failed')
         }
     }, [status]);
 
