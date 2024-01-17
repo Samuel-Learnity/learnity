@@ -5,12 +5,17 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import {UserTypes} from "../../types/userTypes";
 import {Animated} from "react-native";
 import delay = Animated.delay;
+import Auth from '@aws-amplify/auth';
 
 interface AuthState {
     token: string | null;
     status: 'idle' | 'loading' | 'succeeded' | 'failed';
     error: string | null;
-    user: UserTypes | null
+    user: UserTypes | null,
+    email: string | null,
+    password: string | null,
+    code: string | null,
+    verifying: boolean,
 }
 
 export interface AuthResponse {
@@ -58,6 +63,31 @@ export const registerUser =
             }
         });
 
+export const signUpOrConfirmSignUp = createAsyncThunk(
+    'auth/signUpOrConfirmSignUp',
+    async (props: { email: string, password: string, code?: string, verifying: boolean }, thunkAPI) => {
+        try {
+            if (props.verifying && props.code) {
+                const result = await Auth.confirmSignUp({
+                    username: props.email,
+                    confirmationCode: props.code,
+                });
+                // Do something async
+                //thunkAPI.dispatch(setScreen('login'));
+            } else {
+                await Auth.signUp({
+                    username: props.email,
+                    password: props.password,
+                });
+                // Do something async
+                //thunkAPI.dispatch(setVerifying(true));
+            }
+        } catch (error) {
+            alert(error);
+        }
+    }
+);
+
 const authSlice = createSlice({
     name: 'auth',
     initialState: {
@@ -65,6 +95,11 @@ const authSlice = createSlice({
         status: 'idle',
         error: null,
         user: null,
+        //
+        email: '',
+        password: '',
+        code: '',
+        verifying: false,
     } as AuthState,
     reducers: {
         setToken: (state, action) => {
@@ -76,6 +111,19 @@ const authSlice = createSlice({
             state.error = null;
             state.user = null;
             AsyncStorage.removeItem('@jwtToken');
+        },
+        //
+        setEmail: (state, action) => {
+            state.email = action.payload;
+        },
+        setPassword: (state, action) => {
+            state.password = action.payload;
+        },
+        setCode: (state, action) => {
+            state.code = action.payload;
+        },
+        setVerifying: (state, action) => {
+            state.verifying = action.payload;
         },
     },
     extraReducers: (builder) => {
@@ -124,6 +172,14 @@ const authSlice = createSlice({
     },
 });
 
-export const {logoutUser, setToken} = authSlice.actions;
+export const {
+    logoutUser,
+    setToken,
+    setCode,
+    setVerifying,
+    setPassword,
+    setEmail
+} = authSlice.actions;
+
 export default authSlice.reducer;
 export const selectAuth = (state: { auth: AuthState }) => state.auth;

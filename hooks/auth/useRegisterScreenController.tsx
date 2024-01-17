@@ -5,16 +5,21 @@ import useRegisterViewModel from "../../vm/auth/useRegisterViewModel";
 export const useRegisterScreenController = () => {
     const navigation = useNavigation()
     const router = useRouter()
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
-    const [username, setUsername] = useState("")
+    //const [email, setEmail] = useState("")
+    //const [password, setPassword] = useState("")
+    //const [username, setUsername] = useState("")
     const [headerShown, setHeaderShown] = useState(true);
 
     const {
         handleRegister,
         status,
         token,
-        error
+        error,
+        //--
+        email,
+        verifying,
+        password,
+        code
     } = useRegisterViewModel()
 
     const onGoWelcomeScreen = () => {
@@ -27,20 +32,22 @@ export const useRegisterScreenController = () => {
         navigation.navigate("login")
     }
 
+    /*
     // TODO: auth check and redirect
     const onRegister = () => {
         if (password != "" && email != "") {
             handleRegister({email: email, password: password, username: username})
         }
     }
-
+    */
 
 
     return {
-        email, setEmail,
-        password, setPassword,
-        username, setUsername,
+        email,// setEmail,
+        password,// setPassword,
+        //username, setUsername,
         headerShown, setHeaderShown,
-        onGoWelcomeScreen, goToLogin, onRegister
+        onGoWelcomeScreen, goToLogin
+        //, onRegister
     }
 }

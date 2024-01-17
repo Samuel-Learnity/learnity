@@ -10,13 +10,14 @@ import {ButtonSize_L} from "../../components/design system/ButtonStyles";
 import {Header} from "../../components/common/Header";
 import {useRegisterScreenController} from "../../hooks/auth/useRegisterScreenController";
 
-export default function LoginScreen() {
+export default function RegisterScreen() {
     const {
-        email, setEmail,
-        password, setPassword,
-        username, setUsername,
+        email,// setEmail,
+        password,// setPassword,
+        //username, setUsername,
         headerShown, setHeaderShown,
-        onGoWelcomeScreen, goToLogin, onRegister
+        onGoWelcomeScreen, goToLogin
+        //, onRegister
     } = useRegisterScreenController()
 
     return (
@@ -42,7 +43,19 @@ export default function LoginScreen() {
                     value={username}
                     onChangeText={e => setUsername(e)}
                 />
-                {username !== '' &&
+
+                <Spacer size={16}/>
+                {email !== "" &&
+                    <TextInput
+                        label="Mot de passe"
+                        style={styles.input}
+                        mode={'outlined'}
+                        value={password}
+                        secureTextEntry={true}
+                        onChangeText={e => setPassword(e)}
+                    />
+                }
+                {/*username !== '' &&
                     <>
                         <Spacer size={16}/>
                         <TextInput
@@ -53,19 +66,8 @@ export default function LoginScreen() {
                             onChangeText={e => setEmail(e)}
                         />
 
-                        <Spacer size={16}/>
-                        {email !== "" &&
-                            <TextInput
-                                label="Mot de passe"
-                                style={styles.input}
-                                mode={'outlined'}
-                                value={password}
-                                secureTextEntry={true}
-                                onChangeText={e => setPassword(e)}
-                            />
-                        }
                     </>
-                }
+                */}
             </View>
             <View style={{width: "100%", alignContent: 'flex-start', marginLeft: "20%", marginTop: 16}}>
                 <Text style={styles.linkText} onPress={goToLogin}>

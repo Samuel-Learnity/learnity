@@ -17,7 +17,7 @@ export default function LoginScreen() {
                 style={styles.logo}
                 contentFit={"contain"}
             />
-            
+            {/*
             <Button
                 title={"Se connecter"}
                 mode="outlined"
@@ -37,6 +37,7 @@ export default function LoginScreen() {
                 marginVertical={8}
                 buttonSize={ButtonSize_M}
             />
+            */}
             <Button
                 title={"S'enregistrer"}
                 mode="contained"
