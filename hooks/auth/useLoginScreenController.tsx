@@ -34,19 +34,6 @@ export const useLoginScreenController = () => {
         }
     }
 
-    useEffect(() => {
-        if (status === 'succeeded') {
-            // Si Login, Register, Autologin ont réussit -> GoToApp
-            console.log('login succeeded')
-        } else if (status === 'loading') {
-            console.log('login loading')
-        } else if (status === 'failed') {
-            console.log('login failed')
-        } else {
-            console.log('login idle')
-        }
-    }, [status]);
-
     return {
         email, setEmail,
         password, setPassword,

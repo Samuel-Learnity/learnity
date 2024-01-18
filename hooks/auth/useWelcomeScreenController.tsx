@@ -7,7 +7,8 @@ export const useWelcomeScreenController = () => {
     const {
         handleAutoLogin,
         status,
-        error
+        error,
+        isAuthenticated
     } = useAuthViewModel()
 
     const goToRegister = useCallback(() => {
@@ -25,14 +26,7 @@ export const useWelcomeScreenController = () => {
     }, [])
 
     const checkUserAuthentication = async () => {
-        try {
-            handleAutoLogin()
-                .then(() => {
-                goToHome()
-            })
-        } catch (e) {
-            goToLogin()
-        }
+        await handleAutoLogin()
     };
 
     useEffect(() => {
@@ -40,6 +34,13 @@ export const useWelcomeScreenController = () => {
         checkUserAuthentication()
     }, []);
 
+    useEffect(() => {
+        if (isAuthenticated) {
+            goToHome()
+        } else {
+            goToLogin()
+        }
+    }, [isAuthenticated]);
 
     return {goToRegister, goToLogin}
 }

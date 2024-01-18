@@ -1,6 +1,8 @@
 import {useDispatch, useSelector} from 'react-redux';
 import {AppDispatch, RootState} from "../../redux/store";
 import {confirmSignUpThunk, signUpThunk} from "../../redux/slices/authSlice";
+import {autoSignIn, SignUpOutput} from "aws-amplify/auth";
+import {useNavigation} from "expo-router";
 
 export const useRegisterViewModel = () => {
     const dispatch = useDispatch<AppDispatch>();
@@ -17,7 +19,6 @@ export const useRegisterViewModel = () => {
         console.log("handle signup")
         dispatch(signUpThunk({email: email, password: password}));
     };
-
     const handleConfirmSignUp = () => {
         console.log("handle verifying")
         dispatch(confirmSignUpThunk({email: email, code: code}));

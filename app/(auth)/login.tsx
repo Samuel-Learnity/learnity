@@ -56,6 +56,7 @@ export default function LoginScreen() {
                                 label="Mot de passe"
                                 style={styles.input}
                                 mode={'outlined'}
+                                secureTextEntry={true}
                                 value={password}
                                 onChangeText={e => setPassword(e)}
                             />

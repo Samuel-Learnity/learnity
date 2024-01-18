@@ -1,15 +1,13 @@
 import {useDispatch, useSelector} from "react-redux";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import store, {AppDispatch, RootState} from "../../../redux/store";
-import {logoutUser, setToken} from "../../../redux/slices/authSlice";
+import {logoutUser, setToken, signOutThunk} from "../../../redux/slices/authSlice";
 
 export const useSettingsViewModel = () => {
     const dispatch = useDispatch<AppDispatch>();
     const {
         status,
         error,
-        token,
-        user
     } = useSelector((state: RootState) => state.auth);
 
     const retrieveTokenFromCookies = async () => {
@@ -23,14 +21,12 @@ export const useSettingsViewModel = () => {
     };
 
     const handleDisconnect = async () => {
-        dispatch(logoutUser());
+        await dispatch(signOutThunk());
     };
 
     return {
         status,
         error,
-        token,
-        user,
         handleDisconnect,
     };
 }

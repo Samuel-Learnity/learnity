@@ -39,21 +39,26 @@ export default function RegisterScreen() {
             />
             <Text style={styles.title}>Inscription</Text>
             <View style={styles.form}>
-                <TextInput
-                    label="Email"
-                    style={styles.input}
-                    mode={'outlined'}
-                    value={email}
-                    onChangeText={e => _setEmail(e)}
-                />
-                <TextInput
-                    label="Mot de passe"
-                    style={styles.input}
-                    mode={'outlined'}
-                    value={password}
-                    secureTextEntry={true}
-                    onChangeText={e => _setPassword(e)}
-                />
+                {!verifying &&
+                    <>
+                        <TextInput
+                            label="Email"
+                            style={styles.input}
+                            mode={'outlined'}
+                            value={email}
+                            onChangeText={e => _setEmail(e)}
+                        />
+                        <TextInput
+                            label="Mot de passe"
+                            style={styles.input}
+                            mode={'outlined'}
+                            value={password}
+                            secureTextEntry={true}
+                            onChangeText={e => _setPassword(e)}
+                        />
+                    </>
+                }
+
                 {verifying &&
                     <>
                         <TextInput
@@ -63,11 +68,6 @@ export default function RegisterScreen() {
                             value={code}
                             onChangeText={e => _setCode(e)}
                         />
-                    </>
-                }
-                {status === "verifying" &&
-                    <>
-                        <Text>Vous êtes inscrit !</Text>
                     </>
                 }
             </View>

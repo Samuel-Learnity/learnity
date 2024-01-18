@@ -15,8 +15,6 @@ export const useSettingsScreenController = () => {
         handleDisconnect,
         status,
         error,
-        token,
-        user,
     } = useSettingsViewModel()
 
     const goBack = () => {
@@ -45,7 +43,11 @@ export const useSettingsScreenController = () => {
     }
 
     const onDisconnect = () => {
-        handleDisconnect()
+        handleDisconnect().then(()=>{
+            console.log("disconnected")
+        }).catch(() => {
+            console.log("fail disconnect")
+        })
     }
     const onDeleteAccount = () => {
         //
@@ -53,7 +55,6 @@ export const useSettingsScreenController = () => {
     }
 
     return {
-        user,
         email, setEmail,
         oldPassword, setOldPassword,
         headerShown, setHeaderShown,

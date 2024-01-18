@@ -1,7 +1,7 @@
 import {useNavigation, useRouter} from "expo-router";
 import {useEffect, useState} from "react";
 import useRegisterViewModel from "../../vm/auth/useRegisterViewModel";
-import {logoutUser, setToken, setEmail, setPassword, setVerifying, setCode} from "../../redux/slices/authSlice";
+import { setEmail, setPassword, setVerifying, setCode} from "../../redux/slices/authSlice";
 import {useDispatch} from "react-redux";
 import {AppDispatch} from "../../redux/store";
 
@@ -52,11 +52,10 @@ export const useRegisterScreenController = () => {
         }
     }
     const onConfirmSignup = () => {
-        if (password != "" && code != "") {
+        if (email != "" && code != "") {
             handleConfirmSignUp()
         }
     }
-
 
     return {
         status,

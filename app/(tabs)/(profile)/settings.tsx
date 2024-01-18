@@ -13,7 +13,6 @@ import {useSettingsScreenController} from "../../../hooks/tabs/profile/useSettin
 
 export default function SettingsScreen() {
     const {
-        user,
         email, setEmail,
         oldPassword, setOldPassword,
         headerShown, setHeaderShown,
@@ -90,7 +89,7 @@ export default function SettingsScreen() {
                             style={styles.input}
                             mode={'outlined'}
                             value={email}
-                            placeholder={user?.email ?? ""}
+                            placeholder={""}
                             onChangeText={e => setEmail(e)}
                         />
                         <Spacer size={16}/>

@@ -1,5 +1,5 @@
 import store, {AppDispatch, RootState} from "../../redux/store";
-import {fetchAuthSessionThunk, setToken} from "../../redux/slices/authSlice";
+import {fetchAuthSessionThunk} from "../../redux/slices/authSlice";
 import {useDispatch, useSelector} from "react-redux";
 
 export const useAuthViewModel = () => {
@@ -7,6 +7,7 @@ export const useAuthViewModel = () => {
     const {
         status,
         error,
+        isAuthenticated,
     } = useSelector((state: RootState) => state.auth);
 
     const handleAutoLogin = async () => {
@@ -18,6 +19,7 @@ export const useAuthViewModel = () => {
         handleAutoLogin,
         status,
         error,
+        isAuthenticated,
     };
 }
 
