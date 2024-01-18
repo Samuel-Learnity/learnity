@@ -1,100 +1,113 @@
-import {AsyncThunk, createAsyncThunk, createSlice} from '@reduxjs/toolkit';
-import {axiosInstance} from "../../axios";
-import {AsyncThunkConfig} from "@reduxjs/toolkit/src/createAsyncThunk";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import {UserTypes} from "../../types/userTypes";
-import {Animated} from "react-native";
-import delay = Animated.delay;
-import Auth from '@aws-amplify/auth';
+import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
+import {confirmSignUp, signIn, type SignInInput, signUp} from 'aws-amplify/auth';
+import {fetchAuthSession} from "aws-amplify/src/auth";
 
 interface AuthState {
-    token: string | null;
-    status: 'idle' | 'loading' | 'succeeded' | 'failed';
+    status: 'idle' | 'loading' | 'succeeded' | 'failed' | 'verifying';
     error: string | null;
-    user: UserTypes | null,
-    email: string | null,
-    password: string | null,
-    code: string | null,
+    //--
+    email: string | undefined,
+    password: string | undefined,
+    code: string | undefined,
     verifying: boolean,
 }
+//
+//
+// AUTOLOGIN
+//
+//
 
-export interface AuthResponse {
-    token: string;
-}
-
-export const fetchUser: AsyncThunk<any, { token: string }, AsyncThunkConfig> =
-    createAsyncThunk(
-        'auth/fetchUser',
-        async (credentials) => {
-            try {
-                const response = await axiosInstance.post('/user', credentials);
-                return response.data
-            } catch (error) {
-                console.log("fetchUserFailed")
-                // @ts-ignore
-                throw new Error(error.message);
-            }
-        }
-    );
-
-export const loginUser: AsyncThunk<AuthResponse, { email: string, password: string }, AsyncThunkConfig> =
-    createAsyncThunk(
-        'auth/loginUser',
-        async (credentials) => {
-            try {
-                const response = await axiosInstance.post('/login', credentials);
-                return response.data as AuthResponse
-            } catch (error) {
-                // @ts-ignore
-                throw new Error(error.message);
-            }
-        }
-    );
-
-export const registerUser =
-    createAsyncThunk(
-        'auth/registerUser',
-        async (credentials: { email: string; password: string; username: string }) => {
-            try {
-                const response = await axiosInstance.post('/register', credentials);
-                return response.data as AuthResponse;
-            } catch (error) {
-                throw new Error('Registration failed');
-            }
-        });
-
-export const signUpOrConfirmSignUp = createAsyncThunk(
-    'auth/signUpOrConfirmSignUp',
-    async (props: { email: string, password: string, code?: string, verifying: boolean }, thunkAPI) => {
+export const fetchAuthSessionThunk = createAsyncThunk(
+    'auth/signUp',
+    async (thunkAPI) => {
         try {
-            if (props.verifying && props.code) {
-                const result = await Auth.confirmSignUp({
-                    username: props.email,
-                    confirmationCode: props.code,
-                });
-                // Do something async
-                //thunkAPI.dispatch(setScreen('login'));
-            } else {
-                await Auth.signUp({
-                    username: props.email,
-                    password: props.password,
-                });
+            await fetchAuthSession()
+        } catch (error) {
+            console.log('error fetchAuthSessionThunk',error)
+            throw error
+        }
+    }
+);
+
+//
+//
+// LOGIN
+//
+//
+export const signInThunk = createAsyncThunk(
+    'auth/signUp',
+    async ({username, password}: SignInInput, thunkAPI) => {
+        try {
+            if (password && username) {
+                console.log(password, username)
+                const result = await signIn({ username, password, options: { authFlowType: "USER_PASSWORD_AUTH" }});
+                console.log("signin", result)
                 // Do something async
                 //thunkAPI.dispatch(setVerifying(true));
             }
         } catch (error) {
+            console.log('error signin',error)
+            alert(error);
+            throw error
+        }
+    }
+);
+
+//
+//
+// REGISTER
+//
+//
+export const confirmSignUpThunk = createAsyncThunk(
+    'auth/signUpOrConfirmSignUp',
+    async (props: { code?: string, email?: string }, thunkAPI) => {
+        try {
+            if ( props.code && props.email) {
+                const result = await confirmSignUp({
+                    username: props.email,
+                    confirmationCode: props.code,
+                });
+                console.log("confirm", result)
+                // Do something async
+                //thunkAPI.dispatch(setScreen('login'));
+            }
+        } catch (error) {
+            console.log("confirm", error)
+            alert(error);
+            throw error
+        }
+    }
+);
+export const signUpThunk = createAsyncThunk(
+    'auth/signUp',
+    async (props: { email?: string, password?: string}, thunkAPI) => {
+        try {
+            if (props.password && props.email) {
+                const result = await signUp({
+                    username: props.email,
+                    password: props.password,
+                });
+                console.log("signup", result)
+                // Do something async
+                thunkAPI.dispatch(setVerifying(true));
+            }
+        } catch (error) {
+            console.log(error)
             alert(error);
         }
     }
 );
 
+//
+//
+// REDUCERS
+//
+//
 const authSlice = createSlice({
     name: 'auth',
     initialState: {
-        token: null,
         status: 'idle',
         error: null,
-        user: null,
         //
         email: '',
         password: '',
@@ -103,14 +116,9 @@ const authSlice = createSlice({
     } as AuthState,
     reducers: {
         setToken: (state, action) => {
-            state.token = action.payload;
         },
         logoutUser: (state) => {
-            state.token = null;
-            state.status = 'idle';
-            state.error = null;
-            state.user = null;
-            AsyncStorage.removeItem('@jwtToken');
+
         },
         //
         setEmail: (state, action) => {
@@ -128,47 +136,32 @@ const authSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            // Login use cases
-            .addCase(loginUser.pending, (state) => {
+            // Register use cases
+            .addCase(signUpThunk.pending, (state) => {
                 state.status = 'loading';
             })
-            .addCase(loginUser.fulfilled, (state, action) => {
-                state.status = 'succeeded';
-                state.token = action.payload.token;
-                AsyncStorage.setItem('@jwtToken', action.payload.token);
+            .addCase(signUpThunk.fulfilled, (state, action) => {
+                state.status = 'idle';
+                state.password = ""
             })
-            .addCase(loginUser.rejected, (state, action) => {
+            .addCase(signUpThunk.rejected, (state, action) => {
                 state.status = 'failed';
+                state.password = ""
                 state.error = action.error.message || null;
             })
-
-            // Register use cases
-            .addCase(registerUser.pending, (state) => {
+            .addCase(confirmSignUpThunk.pending, (state) => {
                 state.status = 'loading';
             })
-            .addCase(registerUser.fulfilled, (state, action) => {
+            .addCase(confirmSignUpThunk.fulfilled, (state, action) => {
                 state.status = 'succeeded';
-                state.token = action.payload.token;
                 state.error = null;
-                AsyncStorage.setItem('@jwtToken', action.payload.token);
+                //AsyncStorage.setItem('@jwtToken', action.payload.token);
             })
-            .addCase(registerUser.rejected, (state, action) => {
+            .addCase(confirmSignUpThunk.rejected, (state, action) => {
                 state.status = 'failed';
-                state.error = action.error.message || 'Registration failed';
+                state.code = ""
+                state.error = action.error.message || 'Confirmation of mail signup failed';
             })
-
-            // FETCH USER PROFILE USE CASES
-            .addCase(fetchUser.pending, (state) => {
-                state.status = 'loading';
-            })
-            .addCase(fetchUser.fulfilled, (state, action) => {
-                state.status = 'succeeded';
-                state.user = action.payload;
-            })
-            .addCase(fetchUser.rejected, (state, action) => {
-                state.status = 'failed';
-                state.error = action.error.message || 'Fetch user failed';
-            });
     },
 });
 

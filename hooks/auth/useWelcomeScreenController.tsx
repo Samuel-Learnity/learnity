@@ -6,9 +6,7 @@ export const useWelcomeScreenController = () => {
     const navigation = useNavigation()
     const {
         handleAutoLogin,
-        retrieveTokenFromCookies,
         status,
-        token,
         error
     } = useAuthViewModel()
 
@@ -22,35 +20,26 @@ export const useWelcomeScreenController = () => {
         navigation.navigate("login")
     },[])
 
-    const autoLogin = useCallback(async () => {
-        await retrieveTokenFromCookies()
-    }, [token]);
+    const goToHome =  useCallback(() => {
+        router.push('/(tabs)/(home)/home')
+    }, [])
 
-    useEffect(() => {
-        autoLogin()
-    }, []);
-
-    useEffect(() => {
-        if (token) {
-            console.log('have token')
-            handleAutoLogin();
-        } else {
-            // Ne marche pas lors de la première ouverture de l'app
-            console.log('go to login')
+    const checkUserAuthentication = async () => {
+        try {
+            handleAutoLogin()
+                .then(() => {
+                goToHome()
+            })
+        } catch (e) {
             goToLogin()
         }
-    }, [token]);
+    };
 
     useEffect(() => {
-        if (status === 'succeeded') {
-            // Si Login, Register, Autologin ont réussit -> GoToApp
-            router.push('/(tabs)/(home)/home')
-        } else if (status === 'loading') {
-            console.log('autologin loading')
-        } else if (status === 'failed') {
-            console.log('autologin failed')
-        }
-    }, [status]);
+        //autoLogin()
+        checkUserAuthentication()
+    }, []);
+
 
     return {goToRegister, goToLogin}
 }

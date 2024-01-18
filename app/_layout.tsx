@@ -8,20 +8,21 @@ import store from "../redux/store";
 import {Provider} from "react-redux";
 
 // TODO: move this in a file
-import {REACT_APP_AWS_API, REACT_APP_AWS_REGION, REACT_APP_AWS_COGNITO_USER_POOL_ID, REACT_APP_AWS_COGNITO_CLIENT_ID} from '@env';
+import {REACT_APP_AWS_API, REACT_APP_AWS_REGION, REACT_APP_AWS_COGNITO_USER_POOL_ID, REACT_APP_AWS_COGNITO_CLIENT_ID, REACT_APP_AWS_COGNITO_IDENTITY_POOL_ID} from '@env';
 
 import {Amplify} from "aws-amplify";
 
 const awsConfig: any = {
     Auth: {
         Cognito: {
+            domain: "https://learnity.auth.eu-west-3.amazoncognito.com",
             //  Amazon Cognito User Pool ID
-            userPoolId: 'REACT_APP_AWS_COGNITO_USER_POOL_ID',
+            userPoolId: REACT_APP_AWS_COGNITO_USER_POOL_ID,
 
             // OPTIONAL - Amazon Cognito Web Client ID (26-char alphanumeric string)
-            userPoolClientId: 'REACT_APP_AWS_COGNITO_CLIENT_ID',
+            userPoolClientId: REACT_APP_AWS_COGNITO_CLIENT_ID,
             // REQUIRED only for Federated Authentication - Amazon Cognito Identity Pool ID
-            //identityPoolId: 'XX-XXXX-X:XXXXXXXX-XXXX-1234-abcd-1234567890ab',
+            identityPoolId: REACT_APP_AWS_COGNITO_IDENTITY_POOL_ID,
 
             // OPTIONAL - This is used when autoSignIn is enabled for Auth.signUp
             // 'code' is used for Auth.confirmSignUp, 'link' is used for email link verification
@@ -56,7 +57,6 @@ const awsConfig: any = {
     },
 };
 
-Amplify.configure(awsConfig);
 
 export {
     // Catch any errors thrown by the Layout component.
@@ -87,7 +87,7 @@ export default function RootLayout() {
 
     return <RootLayoutNav/>;
 }
-
+Amplify.configure(awsConfig);
 
 function RootLayoutNav() {
     const colorScheme = useColorScheme();

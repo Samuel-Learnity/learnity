@@ -23,82 +23,74 @@ export default function LoginScreen() {
         headerShown,
         setHeaderShown,
         status,
-        token,
         error
     } = useLoginScreenController()
 
     return (
         <SafeAreaThemed>
+            <Header
+                headerLeft={{action: onGoWelcomeScreen, icon: Images.BackIcon, width: 32, height: 32}}
+                haveBackground={false}
+                headerShown={headerShown}
+            />
             <>
-
-                <>
-                    <Header
-                        headerLeft={{action: onGoWelcomeScreen, icon: Images.BackIcon, width: 32, height: 32}}
-                        haveBackground={false}
-                        headerShown={headerShown}
+                <Image
+                    source={logoIcon}
+                    alt={"Logo"}
+                    style={styles.logo}
+                    contentFit={"contain"}
+                />
+                <Text style={styles.title}>Connexion</Text>
+                <ThemedView style={styles.form}>
+                    <TextInput
+                        label="Email"
+                        style={styles.input}
+                        mode={'outlined'}
+                        value={email}
+                        onChangeText={e => setEmail(e)}
                     />
+                    {email !== '' &&
+                        <>
+                            <Spacer size={16}/>
+                            <TextInput
+                                label="Mot de passe"
+                                style={styles.input}
+                                mode={'outlined'}
+                                value={password}
+                                onChangeText={e => setPassword(e)}
+                            />
+                            <ThemedView style={{
+                                width: "100%",
+                                alignContent: 'flex-start',
+                                marginLeft: "20%",
+                                marginTop: 16
+                            }}>
+                                <Text style={styles.textBold} onPress={goToResetPassword}>Mot de passe
+                                    oublié ?</Text>
+                            </ThemedView>
+                        </>
+                    }
+                </ThemedView>
+                <ThemedView
+                    style={{width: "100%", alignContent: 'flex-start', marginLeft: "20%", marginTop: 16}}>
+                    <Text style={styles.text}>
+                        Pas encore de compte ?{" "}
+                        <Text style={styles.linkText} onPress={goToRegister}>Créez en un</Text>
+                    </Text>
                     {status == "loading" &&
                         <Text>Loading</Text>
                     }
-                    {(status == "failed" || status == "idle" || status == "succeeded") &&
-                        <>
-                            <Image
-                                source={logoIcon}
-                                alt={"Logo"}
-                                style={styles.logo}
-                                contentFit={"contain"}
-                            />
-                            <Text style={styles.title}>Connexion</Text>
-                            <ThemedView style={styles.form}>
-                                <TextInput
-                                    label="Email"
-                                    style={styles.input}
-                                    mode={'outlined'}
-                                    value={email}
-                                    onChangeText={e => setEmail(e)}
-                                />
-                                {email !== '' &&
-                                    <>
-                                        <Spacer size={16}/>
-                                        <TextInput
-                                            label="Mot de passe"
-                                            style={styles.input}
-                                            mode={'outlined'}
-                                            value={password}
-                                            onChangeText={e => setPassword(e)}
-                                        />
-                                        <ThemedView style={{
-                                            width: "100%",
-                                            alignContent: 'flex-start',
-                                            marginLeft: "20%",
-                                            marginTop: 16
-                                        }}>
-                                            <Text style={styles.textBold} onPress={goToResetPassword}>Mot de passe
-                                                oublié ?</Text>
-                                        </ThemedView>
-                                    </>
-                                }
-                            </ThemedView>
-                            <ThemedView
-                                style={{width: "100%", alignContent: 'flex-start', marginLeft: "20%", marginTop: 16}}>
-                                <Text style={styles.text}>Pas encore de compte ? <Text style={styles.linkText}
-                                                                                       onPress={goToRegister}>Créez
-                                    en un</Text></Text>
-                            </ThemedView>
-                            <Button
-                                title={"Se connecter"}
-                                mode="contained"
-                                onPress={onLogin}
-                                isSticky={true}
-                                width={80}
-                                buttonSize={ButtonSize_L}
-                            />
-                            <Spacer size={160}/>
-                        </>
-                    }
-                </>
+                </ThemedView>
+                <Button
+                    title={"Se connecter"}
+                    mode="contained"
+                    onPress={onLogin}
+                    isSticky={true}
+                    width={80}
+                    buttonSize={ButtonSize_L}
+                />
+                <Spacer size={160}/>
             </>
-
         </SafeAreaThemed>
     );
 }

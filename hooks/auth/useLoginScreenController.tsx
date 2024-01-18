@@ -11,7 +11,6 @@ export const useLoginScreenController = () => {
     const {
         handleLogin,
         status,
-        token,
         error
     } = useLoginViewModel()
 
@@ -53,7 +52,6 @@ export const useLoginScreenController = () => {
         password, setPassword,
         headerShown, setHeaderShown,
         status,
-        token,
         error,
         onGoWelcomeScreen, goToRegister, goToResetPassword, onLogin
     }
