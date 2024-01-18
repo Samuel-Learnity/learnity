@@ -1,24 +1,37 @@
 import {useDispatch, useSelector} from 'react-redux';
-import {registerUser} from "../../redux/slices/authSlice";
 import {AppDispatch, RootState} from "../../redux/store";
+import {confirmSignUpThunk, signUpThunk} from "../../redux/slices/authSlice";
 
 export const useRegisterViewModel = () => {
     const dispatch = useDispatch<AppDispatch>();
     const {
         status,
         error,
-        token
+        email,
+        code,
+        verifying,
+        password
     } = useSelector((state: RootState) => state.auth);
 
-    const handleRegister = (payload: {email: string, password: string, username: string}) => {
-        dispatch(registerUser(payload));
+    const handleSignUp = () => {
+        console.log("handle signup")
+        dispatch(signUpThunk({email: email, password: password}));
+    };
+
+    const handleConfirmSignUp = () => {
+        console.log("handle verifying")
+        dispatch(confirmSignUpThunk({email: email, code: code}));
+
     };
 
     return {
         status,
         error,
-        token,
-        handleRegister,
+        handleSignUp, handleConfirmSignUp,
+        email,
+        code,
+        verifying,
+        password
     };
 }
 

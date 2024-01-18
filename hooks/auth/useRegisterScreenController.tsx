@@ -1,20 +1,28 @@
 import {useNavigation, useRouter} from "expo-router";
 import {useEffect, useState} from "react";
 import useRegisterViewModel from "../../vm/auth/useRegisterViewModel";
+import {logoutUser, setToken, setEmail, setPassword, setVerifying, setCode} from "../../redux/slices/authSlice";
+import {useDispatch} from "react-redux";
+import {AppDispatch} from "../../redux/store";
 
 export const useRegisterScreenController = () => {
     const navigation = useNavigation()
+    const dispatch = useDispatch<AppDispatch>();
     const router = useRouter()
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
-    const [username, setUsername] = useState("")
+    //const [email, setEmail] = useState("")
+    //const [password, setPassword] = useState("")
+    //const [username, setUsername] = useState("")
     const [headerShown, setHeaderShown] = useState(true);
 
     const {
-        handleRegister,
+        handleSignUp, handleConfirmSignUp,
         status,
-        token,
-        error
+        error,
+        //--
+        email,
+        verifying,
+        password,
+        code
     } = useRegisterViewModel()
 
     const onGoWelcomeScreen = () => {
@@ -26,21 +34,38 @@ export const useRegisterScreenController = () => {
         // @ts-ignore
         navigation.navigate("login")
     }
+    const _setEmail = (e: any) => {
+        dispatch(setEmail(e))
+    }
+    const _setPassword = (e: any) => {
+        dispatch(setPassword(e))
+    }
+
+    const _setCode = (e: any) => {
+        dispatch(setCode(e))
+    }
 
     // TODO: auth check and redirect
     const onRegister = () => {
         if (password != "" && email != "") {
-            handleRegister({email: email, password: password, username: username})
+            handleSignUp()
+        }
+    }
+    const onConfirmSignup = () => {
+        if (password != "" && code != "") {
+            handleConfirmSignUp()
         }
     }
 
 
-
     return {
-        email, setEmail,
-        password, setPassword,
-        username, setUsername,
+        status,
+        email, _setEmail,
+        password, _setPassword,
+        verifying,
+        code, _setCode,
+        //username, setUsername,
         headerShown, setHeaderShown,
-        onGoWelcomeScreen, goToLogin, onRegister
+        onGoWelcomeScreen, goToLogin, onRegister, onConfirmSignup
     }
 }

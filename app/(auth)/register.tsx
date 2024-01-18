@@ -9,14 +9,18 @@ import {Button} from "../../components/design system/SystemButton";
 import {ButtonSize_L} from "../../components/design system/ButtonStyles";
 import {Header} from "../../components/common/Header";
 import {useRegisterScreenController} from "../../hooks/auth/useRegisterScreenController";
+import {state} from "sucrase/dist/types/parser/traverser/base";
 
-export default function LoginScreen() {
+export default function RegisterScreen() {
     const {
-        email, setEmail,
-        password, setPassword,
-        username, setUsername,
+        status,
+        email, _setEmail,
+        password, _setPassword,
+        code, _setCode,
+        verifying,
+        //username, setUsername,
         headerShown, setHeaderShown,
-        onGoWelcomeScreen, goToLogin, onRegister
+        onGoWelcomeScreen, goToLogin, onRegister, onConfirmSignup
     } = useRegisterScreenController()
 
     return (
@@ -36,34 +40,34 @@ export default function LoginScreen() {
             <Text style={styles.title}>Inscription</Text>
             <View style={styles.form}>
                 <TextInput
-                    label="Username"
+                    label="Email"
                     style={styles.input}
                     mode={'outlined'}
-                    value={username}
-                    onChangeText={e => setUsername(e)}
+                    value={email}
+                    onChangeText={e => _setEmail(e)}
                 />
-                {username !== '' &&
+                <TextInput
+                    label="Mot de passe"
+                    style={styles.input}
+                    mode={'outlined'}
+                    value={password}
+                    secureTextEntry={true}
+                    onChangeText={e => _setPassword(e)}
+                />
+                {verifying &&
                     <>
-                        <Spacer size={16}/>
                         <TextInput
-                            label="Email"
+                            label="code"
                             style={styles.input}
                             mode={'outlined'}
-                            value={email}
-                            onChangeText={e => setEmail(e)}
+                            value={code}
+                            onChangeText={e => _setCode(e)}
                         />
-
-                        <Spacer size={16}/>
-                        {email !== "" &&
-                            <TextInput
-                                label="Mot de passe"
-                                style={styles.input}
-                                mode={'outlined'}
-                                value={password}
-                                secureTextEntry={true}
-                                onChangeText={e => setPassword(e)}
-                            />
-                        }
+                    </>
+                }
+                {status === "verifying" &&
+                    <>
+                        <Text>Vous êtes inscrit !</Text>
                     </>
                 }
             </View>
@@ -73,9 +77,9 @@ export default function LoginScreen() {
                 </Text>
             </View>
             <Button
-                title={"S'inscrire"}
+                title={verifying ? "Confirmer" : "S'inscrire"}
                 mode="contained"
-                onPress={onRegister}
+                onPress={verifying ? onConfirmSignup : onRegister}
                 isSticky={true}
                 width={80}
                 marginHorizontal={8}

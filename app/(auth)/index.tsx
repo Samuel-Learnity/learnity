@@ -17,7 +17,6 @@ export default function LoginScreen() {
                 style={styles.logo}
                 contentFit={"contain"}
             />
-
             <Button
                 title={"Se connecter"}
                 mode="outlined"

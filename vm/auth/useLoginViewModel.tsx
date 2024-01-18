@@ -1,6 +1,6 @@
 import {useDispatch, useSelector} from 'react-redux';
-import {loginUser} from "../../redux/slices/authSlice";
 import {AppDispatch, RootState} from "../../redux/store";
+import {signInThunk} from "../../redux/slices/authSlice";
 
 type HandleLoginProps = {
     email: string,
@@ -12,17 +12,16 @@ export const useLoginViewModel = () => {
     const {
         status,
         error,
-        token
     } = useSelector((state: RootState) => state.auth);
 
     const handleLogin = (payload: HandleLoginProps) => {
-        dispatch(loginUser(payload))
+        console.log(payload)
+        dispatch(signInThunk({username: payload.email, password: payload.password}))
     };
 
     return {
         status,
         error,
-        token,
         handleLogin,
     };
 }
